@@ -1,0 +1,15 @@
+{
+	"cpp_tpl": {
+		"prefix": ["tpl"],
+		"body": ["/* $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND */\n#include<bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\ntypedef pair<int, int> pii;\n#define mp make_pair\n#define fst first\n#define snd second\n#define fr(i, a, b) for(int i=a; i<b; i++)\n#define rep(i, begin, end) for (__typeof(end) i = (begin) - ((begin) > (end)); i != (end) - ((begin) > (end)); i += 1 - 2 * ((begin) > (end)))\ntemplate<class T = int> using V = vector<T>;\ntemplate<class T = int> using VV = V< V<T> >;\n\nint main() {\n\tcin.tie(nullptr); ios::sync_with_stdio(false);\n\t$0\n}"
+		],
+		"description": "cpp template"
+	},
+	"cpp2_tpl": {
+		"prefix": ["tpl2"],
+		"body": ["/* $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND */\n#include<bits/stdc++.h>\nusing namespace std;\ntypedef long long ll;\ntypedef pair<int, int> pii;\n#define mp make_pair\n#define fst first\n#define snd second\n#define fr(i, a, b) for(int i=a; i<b; i++)\n#define rep(i, begin, end) for (__typeof(end) i = (begin) - ((begin) > (end)); i != (end) - ((begin) > (end)); i += 1 - 2 * ((begin) > (end)))\ntemplate<class T = int> using V = vector<T>;\ntemplate<class T = int> using VV = V< V<T> >;\n\nvoid main2() {\n\t$0\n}\n\nint main() {\n\tcin.tie(nullptr); ios::sync_with_stdio(false);\n\tint T;\n\tcin>>T;\n\tfor(int i=1; i<=T; i++) {\n\t\tcout<<\"Case #\"<<i<<\": \";\n\t\tmain2();\n\t}\n\n}"
+		],
+		"description": "cpp template"
+	}
+}
+

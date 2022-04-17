@@ -1,0 +1,49 @@
+snippet tpl "cpp template"
+/* `date +%Y-%m-%d\ %H:%M:%S` */
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+typedef pair<int, int> pii;
+#define mp make_pair
+#define fst first
+#define snd second
+#define fr(i, a, b) for(int i=a; i<b; i++)
+#define rep(i, begin, end) for (__typeof(end) i = (begin) - ((begin) > (end)); i != (end) - ((begin) > (end)); i += 1 - 2 * ((begin) > (end)))
+template<class T = int> using V = vector<T>;
+template<class T = int> using VV = V< V<T> >;
+
+int main() {
+	cin.tie(nullptr); ios::sync_with_stdio(false);
+	$0
+}
+endsnippet
+
+snippet tpl2 "cpp template2"
+/* `date +%Y-%m-%d\ %H:%M:%S` */
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+typedef pair<int, int> pii;
+#define mp make_pair
+#define fst first
+#define snd second
+#define fr(i, a, b) for(int i=a; i<b; i++)
+#define rep(i, begin, end) for (__typeof(end) i = (begin) - ((begin) > (end)); i != (end) - ((begin) > (end)); i += 1 - 2 * ((begin) > (end)))
+template<class T = int> using V = vector<T>;
+template<class T = int> using VV = V< V<T> >;
+
+void main2() {
+	$0
+}
+
+int main() {
+	cin.tie(nullptr); ios::sync_with_stdio(false);
+	int T;
+	cin>>T;
+	for(int i=1; i<=T; i++) {
+		cout<<"Case #"<<i<<": ";
+		main2();
+	}
+
+}
+endsnippet
