@@ -32,7 +32,6 @@ vim.cmd [[Plug 'numToStr/Comment.nvim']]
 vim.cmd [[Plug 'editorconfig/editorconfig-vim']]
 vim.cmd [[Plug 'windwp/nvim-autopairs']]
 vim.cmd [[Plug 'tpope/vim-surround']]
-vim.cmd [[Plug 'tpope/vim-fugitive']]
 vim.cmd [[Plug 'lewis6991/gitsigns.nvim']]
 vim.cmd [[Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }]]
 
