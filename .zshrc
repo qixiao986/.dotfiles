@@ -105,7 +105,7 @@ source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighti
 alias ll='ls -ahl'
 alias killpy="ps aux|grep python|grep -v grep | awk '{print \$2}' | xargs kill -9"
 alias rmexe="find . -maxdepth 1 -type f ! -name '*.*'  -exec rm -f {} +"
-alias config='/usr/local/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias cfg='/usr/local/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export PATH="/usr/local/lib/ruby/gems/3.1.0/bin:$PATH"
 # export PATH="/usr/local/opt/llvm/bin:$PATH"
