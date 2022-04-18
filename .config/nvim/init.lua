@@ -72,7 +72,9 @@ packer.startup(function()
   use 'norcalli/nvim-colorizer.lua'
   use 'connorholyday/vim-snazzy'
   use 'folke/which-key.nvim'
+
   -- language specific
+  use {"ellisonleao/glow.nvim", branch = 'main'} --markdown preview
   -- this one dont need update for now
   use { 'p00f/cphelper.nvim', lock = true }
 end)
@@ -172,7 +174,6 @@ vim.api.nvim_set_keymap('v', '*', '<cmd>lua VisualSelection("f")<cr>', {noremap=
 vim.api.nvim_set_keymap('v', '#', '<cmd>lua VisualSelection("b")<cr>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('v', 'R', '<cmd>lua VisualSelection("r")<cr>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('t', '<ESC>', '<C-\\><C-n>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('t', '<leader>v', '<C-w>"*', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('c', '<C-l>', '<right>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('c', '<C-h>', '<left>', {noremap=true, silent=true})
 
