@@ -6,7 +6,6 @@ end
 
 vim.g.mapleader = t'<Space>'
 vim.g.maplocalleader = t'<Space>'
--- vim.g.python3_host_prog = '/usr/local/bin/python'
 
 vim.cmd[[source $HOME/.config/nvim/plugin/packer_compiled.lua]]
 local packer = require('packer')
@@ -115,14 +114,9 @@ vim.opt.undodir=os.getenv( "HOME" ) ..'/.config/nvim/undodir'
 vim.opt.scrolloff = 3
 vim.opt.autoread = true
 vim.opt.autowriteall = true
-
---vim.opt.foldmethod = 'syntax'
--- Update gutters 200 ms
-vim.opt.updatetime = 200
-
+vim.opt.updatetime = 800
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
 vim.opt.cindent = true
 vim.opt.cinoptions = {'N-s', 'g0', 'j1', '(s', 'm1'}
 
@@ -134,12 +128,9 @@ vim.opt.incsearch = true
 vim.opt.showmatch = true
 vim.opt.guicursor=[[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175]]
 vim.opt.termguicolors = true
-
-vim.g.fzf_preview_window = {'right:50%', 'ctrl-/'}
-
 vim.g.firenvim_config = { localSettings = {['.*'] = {takeover= 'never', priority= 1 }}}
 
-vim.api.nvim_set_keymap('i', 'jk', '<ESC>:w<cr>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('i', 'jk', '<ESC>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('i', '<C-l>', '<right>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('i', '<C-h>', '<left>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('i', '<C-j>', '<down>', {noremap=true, silent=true})
@@ -207,13 +198,21 @@ function StripTrailingWhitespaces()
   vim.fn.winrestview(save_state)
 end
 
+function CursorHoldWriteFile()
+  local buf_name = vim.api.nvim_buf_get_name(0)
+  local mod = vim.api.nvim_buf_get_option(0, "modifiable")
+  if mod and buf_name ~= "" then
+    vim.cmd("update")
+  end
+end
+
 vim.api.nvim_create_autocmd(
   {"BufWritePre","FileWritePre","FileAppendPre","FilterWritePre"},
   {pattern="*.cpp", callback = StripTrailingWhitespaces }
 )
 vim.api.nvim_create_autocmd({"BufEnter","FocusGained","InsertLeave"}, { command = "set relativenumber" })
 vim.api.nvim_create_autocmd({"BufLeave","FocusLost","InsertEnter"}, { command = "set norelativenumber" })
-vim.api.nvim_create_autocmd("CursorHold", { command = "update" })
+vim.api.nvim_create_autocmd("CursorHold", { callback = CursorHoldWriteFile })
 vim.cmd [[set errorformat^=%-GIn\ file\ included\ %.%#]]
 vim.cmd [[set guifont=FiraCode\ Nerd\ Font\ Mono:h12]]
 --gui don't need set lang, terminal nvim need set lang to make the copy right
@@ -397,7 +396,6 @@ cmp.setup({
       }),
       ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
-      -- ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
       ['<Space>'] = cmp.mapping({ i = cmp.mapping.close(), c = cmp.mapping.close() }),
       ['<CR>'] = cmp.mapping({
           i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
@@ -573,16 +571,7 @@ require('sniprun').setup {
         },
   --# you can combo different display modes as desired
   display = {
-    -- "Classic",                    --# display results in the command-line  area
-    -- "VirtualTextOk",              --# display ok results as virtual text (multiline is shortened)
-
-    -- "VirtualTextErr",          --# display error results as virtual text
     "TempFloatingWindow",      --# display results in a floating window
-    -- "LongTempFloatingWindow",  --# same as above, but only long results. To use with VirtualText__
-    -- "Terminal",                --# display results in a vertical split
-    -- "TerminalWithCode",        --# display results and code history in a vertical split
-    -- "NvimNotify",              --# display with the nvim-notify plugin
-    -- "Api"                      --# return output to a programming interface
   },
 }
 vim.api.nvim_set_keymap('v', '<F5>', '<Plug>SnipRun', {silent = true})
@@ -602,21 +591,6 @@ vim.api.nvim_set_keymap('n', '<leader>b', ':BufferLinePick<CR>', {silent = true}
 
 -- minimap
 vim.cmd [[highlight VertSplit cterm=NONE]]
--- vim.g.minimap_auto_start = 1
--- vim.g.mminimap_auto_start_win_enter = 0
-
---floaterm
--- vim.api.nvim_set_keymap('', '<F3>', ':<C-U>w<CR>:FloatermNew --autoclose=1 g++-10 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL %:r.cpp -o %:r<CR>', {noremap=true, silent=true})
--- vim.api.nvim_set_keymap('', '<F2>', ':<C-U>w<CR>:FloatermNew --autoclose=1 g++-11 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -idirafter /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include -idirafter /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib -DLOCAL %:r.cpp -o %:r<CR>', {noremap=true, silent=true})
--- vim.api.nvim_set_keymap('', '<F4>', ':<C-U>FloatermNew --autoclose=0 %:p:h/%:t:r<CR>', {noremap=true, silent=true} )
--- vim.api.nvim_set_keymap('n', '<leader>N', ':FloatermNew<CR>', {noremap=true, silent=true})
--- vim.api.nvim_set_keymap('n', '<leader>n', ':FloatermToggle<CR>', {noremap=true, silent=true})
--- vim.api.nvim_set_keymap('n', '<F7>', ':FloatermPrev<CR>', {noremap=true, silent=true})
--- vim.api.nvim_set_keymap('n', '<F8>', ':FloatermNext<CR>', {noremap=true, silent=true})
--- vim.api.nvim_set_keymap('t', '<F7>', '<C-\\><C-n>:FloatermPrev<CR>', {noremap=true, silent=true})
--- vim.api.nvim_set_keymap('t', '<leader>n', '<C-\\><C-n>:FloatermToggle<CR>', {noremap=true, silent=true})
--- vim.api.nvim_set_keymap('t', '<leader>N', '<C-\\><C-n>:FloatermNew<CR>', {noremap=true, silent=true})
--- vim.api.nvim_set_keymap('t', '<F8>', '<C-\\><C-n>:FloatermNext<CR>', {noremap=true, silent=true})
 
 -- toggleterm
 require("toggleterm").setup{
@@ -632,13 +606,7 @@ require("toggleterm").setup{
   shell = vim.o.shell, -- change the default shell
   -- This field is only relevant if direction is set to 'float'
   float_opts = {
-    -- The border key is *almost* the same as 'nvim_open_win'
-    -- see :h nvim_open_win for details on borders however
-    -- the 'curved' border is a custom border type
-    -- not natively supported but implemented in this plugin.
     border = 'curved',
-    -- width = 100,
-    -- height = 50,
     winblend = 0,
     highlights = {
       border = "Normal",
@@ -653,7 +621,6 @@ local gccomplie = Terminal:new({
 	close_on_exit=true,
 })
 function _gccomplie_toggle()
-  -- gccomplie:toggle()
   vim.cmd[[w]]
   vim.cmd[[3TermExec cmd="g++-11 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL %:r.cpp -o %:r"]]
 end
@@ -754,16 +721,6 @@ dashboard.section.buttons.val = {
   dashboard.button( "d", "﯊  > Del RedoFile", "<cmd>lua _del_redofile()<CR>"),
 }
 dashboard.section.header.val =
--- {
--- '  888b    888 8888888 888     888 888     888 8888888 888b     d888',
--- '  8888b   888   888   888     888 888     888   888   8888b   d8888',
--- '  88888b  888   888   888     888 888     888   888   88888b.d88888',
--- '  888Y88b 888   888   888     888 Y88b   d88P   888   888Y88888P888',
--- '  888 Y88b888   888   888     888  Y88b d88P    888   888 Y888P 888',
--- '  888  Y88888   888   888     888   Y88o88P     888   888  Y8P  888',
--- '  888   Y8888   888   Y88b. .d88P    Y888P      888   888   "   888',
--- '  888    Y888 8888888  "Y88888P"      Y8P     8888888 888       888',
--- }
 {
 '███╗   ██╗██╗██╗   ██╗██╗   ██╗██╗███╗   ███╗',
 '████╗  ██║██║██║   ██║██║   ██║██║████╗ ████║',
@@ -774,8 +731,7 @@ dashboard.section.header.val =
 }
 
 local function footer()
-  -- local plugins = #vim.tbl_keys(vim.g.plugs) --get vim-plug plugins
-  local plugins = #vim.tbl_keys(packer_plugins) --get vim-plug plugins
+  local plugins = #vim.tbl_keys(packer_plugins) --get packer_plugins plugins
   local v = vim.version()
   local datetime = os.date " %Y-%m-%d   %H:%M:%S"
   return string.format(" %d   v%d.%d.%d  %s", plugins, v.major, v.minor, v.patch, datetime)
