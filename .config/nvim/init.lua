@@ -215,7 +215,7 @@ vim.api.nvim_create_autocmd({"BufEnter","FocusGained","InsertLeave"}, { command 
 vim.api.nvim_create_autocmd({"BufLeave","FocusLost","InsertEnter"}, { command = "set norelativenumber" })
 vim.api.nvim_create_autocmd("CursorHold", { callback = CursorHoldWriteFile })
 vim.cmd [[set errorformat^=%-GIn\ file\ included\ %.%#]]
-vim.cmd [[set guifont=FiraCode\ Nerd\ Font\ Mono:h12]]
+vim.opt.guifont = "FiraCode Nerd Font Mono:h12"
 --gui don't need set lang, terminal nvim need set lang to make the copy right
 if vim.fn.has('gui_vimr') == 0 then
   vim.cmd [[language en_US]]
@@ -741,6 +741,7 @@ dashboard.section.footer.val = footer()
 
 alpha.setup(dashboard.opts)
 vim.api.nvim_create_autocmd({"FileType"}, {pattern={"alpha"}, command = "setlocal nofoldenable" })
+vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>Alpha<CR>', {noremap=true, silent=true})
 
 -- lualine
 require('lualine').setup{
