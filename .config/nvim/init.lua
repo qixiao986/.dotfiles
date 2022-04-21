@@ -40,6 +40,7 @@ packer.startup(function()
   use 'windwp/nvim-autopairs'
   use 'tpope/vim-surround'
   use 'lewis6991/gitsigns.nvim'
+  use { 'chentau/marks.nvim', lock = true }
   use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
@@ -787,3 +788,5 @@ vim.g.indent_blankline_filetype_exclude = vim.list_extend(vim.g.indent_blankline
 --chadtree
 vim.api.nvim_set_keymap('n', '<leader>v', '<cmd>CHADopen<cr>', {noremap=true, silent=true})
 
+-- marks
+require('marks').setup{}
