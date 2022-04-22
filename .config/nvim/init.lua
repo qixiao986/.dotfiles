@@ -7,6 +7,15 @@ end
 vim.g.mapleader = t'<Space>'
 vim.g.maplocalleader = t'<Space>'
 
+-- Install packer
+local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+end
+
+local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', { command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua' })
+
 vim.cmd[[source $HOME/.config/nvim/plugin/packer_compiled.lua]]
 local packer = require('packer')
 packer.reset()
@@ -15,6 +24,7 @@ packer.init({
     open_fn = require'packer.util'.float
   }
 })
+
 packer.startup(function()
   use 'wbthomason/packer.nvim'
 
