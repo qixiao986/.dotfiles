@@ -47,6 +47,9 @@ packer.startup(function()
   use 'nvim-telescope/telescope.nvim'
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'neovim/nvim-lspconfig'
+  use 'kosayoda/nvim-lightbulb'
+  use 'nvim-lua/lsp-status.nvim'
+  use 'folke/trouble.nvim'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/playground'
   use 'p00f/nvim-ts-rainbow'
@@ -117,7 +120,7 @@ vim.opt.undodir=os.getenv( "HOME" ) ..'/.config/nvim/undodir'
 vim.opt.scrolloff = 3
 vim.opt.autoread = true
 vim.opt.autowriteall = true
-vim.opt.updatetime = 800
+vim.opt.updatetime = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.cindent = true
@@ -140,7 +143,6 @@ vim.api.nvim_set_keymap('i', '<C-j>', '<down>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('i', '<C-k>', '<up>', {noremap=true, silent=true})
 
 vim.api.nvim_set_keymap('n', '<leader>d', '"_d', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<leader>x', '"_x', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', 'yA', ':%y<CR>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', 'dA', 'gg"_dG', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', 'Y', 'y$', {noremap=true, silent=true})
@@ -284,7 +286,7 @@ local lsp_on_attach = function(client, bufnr)
   buf_set_keymap('n', '<Leader>lwl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 
   buf_set_keymap('n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<Leader>lf', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', '<Leader>lf', '<cmd>Telescope lsp_code_actions<CR>', opts)
   buf_set_keymap('n', '<Leader>le', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
@@ -750,10 +752,11 @@ vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>Alpha<CR>', {noremap=true, silen
 
 -- lualine
 require('lualine').setup{
-	options = { 
-    theme = 'nightfly', 
+	options = {
+    theme = 'nightfly',
     globalstatus = true,
-  }
+  },
+  sections = { lualine_c = { "filename", "b:lsp_current_function" } }
 }
 
 -- nvim-autoapirs
@@ -790,3 +793,39 @@ vim.api.nvim_set_keymap('n', '<leader>v', '<cmd>CHADopen<cr>', {noremap=true, si
 
 -- marks
 require('marks').setup{}
+
+-- trouble
+require('trouble').setup{}
+vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>",
+  {silent = true, noremap = true}
+)
+vim.api.nvim_set_keymap("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>",
+  {silent = true, noremap = true}
+)
+vim.api.nvim_set_keymap("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>",
+  {silent = true, noremap = true}
+)
+vim.api.nvim_set_keymap("n", "<leader>xl", "<cmd>Trouble loclist<cr>",
+  {silent = true, noremap = true}
+)
+vim.api.nvim_set_keymap("n", "<leader>xq", "<cmd>Trouble quickfix<cr>",
+  {silent = true, noremap = true}
+)
+vim.api.nvim_set_keymap("n", "gR", "<cmd>Trouble lsp_references<cr>",
+  {silent = true, noremap = true}
+)
+
+-- nvim-lightbulb
+vim.api.nvim_create_autocmd( "CursorHold", {
+  callback = function()
+    require'nvim-lightbulb'.update_lightbulb()
+  end
+})
+
+-- lsp-status
+require('lsp-status').config{}
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    require('lsp-status/current_function').update()
+  end
+})
