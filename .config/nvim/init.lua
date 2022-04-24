@@ -56,17 +56,22 @@ packer.startup(function()
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use { 'michaelb/sniprun', run = 'bash ./install.sh' }
+  use 'windwp/nvim-spectre'
+  use 'github/copilot.vim'
+
+  -- lsp plugins
   use 'neovim/nvim-lspconfig'
   use 'kosayoda/nvim-lightbulb'
+  use 'weilbith/nvim-code-action-menu'
   use 'nvim-lua/lsp-status.nvim'
   use 'tami5/lspsaga.nvim'
+  use 'simrat39/symbols-outline.nvim'
   use 'folke/trouble.nvim'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/playground'
   use 'p00f/nvim-ts-rainbow'
-  use { 'michaelb/sniprun', run = 'bash ./install.sh' }
-  use 'windwp/nvim-spectre'
-  use 'github/copilot.vim'
+
 
   -- cmp
   use 'hrsh7th/nvim-cmp'
@@ -183,8 +188,6 @@ vim.api.nvim_set_keymap('n', '∆', 'mz:m+<cr>`z', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '˚', 'mz:m-2<cr>`z', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('v', '∆', ':m\'>+<cr>`<my`>mzgv`yo`z', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('v', '˚', ':m\'<-2<cr>`>my`<mzgv`yo`z', {noremap=true, silent=true})
---" Pressing leader ss will toggle and untoggle spell checking
-vim.api.nvim_set_keymap('n', '<leader>ss', ':setlocal spell!<CR>', {noremap=true, silent=true})
 
 --" Visual mode pressing * or # searches for the current selection
 --" Super useful! From an idea by Michael Naumann
@@ -309,14 +312,18 @@ require 'lspsaga'.setup {}
 --- In lsp attach function
 local map = vim.api.nvim_buf_set_keymap
 map(0, "n", "<Leader>lr", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
-map(0, "n", "<Leader>lc", "<cmd>Lspsaga code_action<cr>", {silent = true, noremap = true})
-map(0, "x", "gx", ":<c-u>Lspsaga range_code_action<cr>", {silent = true, noremap = true})
+map(0, "n", "<Leader>lc", "<cmd>CodeActionMenu<cr>", {silent = true, noremap = true})
+map(0, "x", "gx", ":<c-u>CodeActionMenu<cr>", {silent = true, noremap = true})
 map(0, "n", "K",  "<cmd>Lspsaga hover_doc<cr>", {silent = true, noremap = true})
 map(0, "n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent = true, noremap = true})
 map(0, "n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent = true, noremap = true})
 map(0, "n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
 map(0, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
 map(0, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
+
+-- nvim-code-action-menu
+vim.g.code_action_menu_show_details = true
+vim.g.code_action_menu_show_diff = true
 
 -- Completion
 vim.g.UltiSnipsExpandTrigger = '<Plug>(ultisnips_expand)'
@@ -851,3 +858,11 @@ vim.api.nvim_create_autocmd("CursorHold", {
     require('lsp-status/current_function').update()
   end
 })
+
+-- symbols-outline
+vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>SymbolsOutline<cr>",
+  {silent = true, noremap = true}
+)
+vim.g.symbols_outline = {
+  auto_preview = false,
+}
