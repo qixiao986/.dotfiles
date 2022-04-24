@@ -784,7 +784,7 @@ require('lualine').setup{
 -- nvim-autoapirs
 local npairs = require('nvim-autopairs')
 npairs.setup{
-	map_cr=false,
+	map_cr=true,
 	fast_wrap = {
 		map = '´', --alt-e
 	},
