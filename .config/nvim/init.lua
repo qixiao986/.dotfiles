@@ -36,6 +36,7 @@ packer.startup(function()
 
   -- UI Plugins
   use 'nvim-lualine/lualine.nvim'
+  use 'SmiteshP/nvim-gps'
   use 'altercation/vim-colors-solarized'
   use 'akinsho/bufferline.nvim'
   use 'akinsho/toggleterm.nvim'
@@ -225,7 +226,8 @@ end
 function CursorHoldWriteFile()
   local buf_name = vim.api.nvim_buf_get_name(0)
   local mod = vim.api.nvim_buf_get_option(0, "modifiable")
-  if mod and buf_name ~= "" then
+  local buf_type = vim.api.nvim_buf_get_option(0, "buftype")
+  if mod and buf_name ~= "" and buf_type == "" then
     vim.cmd("update")
   end
 end
@@ -781,13 +783,18 @@ alpha.setup(dashboard.opts)
 vim.api.nvim_create_autocmd({"FileType"}, {pattern={"alpha"}, command = "setlocal nofoldenable" })
 vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>Alpha<CR>', {noremap=true, silent=true})
 
+-- nvim-gps
+local gps = require('nvim-gps')
+gps.setup{}
+
+
 -- lualine
 require('lualine').setup{
 	options = {
     theme = 'nightfly',
     globalstatus = true,
   },
-  sections = { lualine_c = { "filename", "b:lsp_current_function" } }
+  sections = { lualine_c = { "filename", {gps.get_location, cond=gps.is_available} } }
 }
 
 -- nvim-autoapirs
