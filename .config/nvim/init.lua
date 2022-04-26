@@ -44,6 +44,7 @@ packer.startup(function()
   use 'petertriho/nvim-scrollbar'
   use 'goolord/alpha-nvim'
   use 'lukas-reineke/indent-blankline.nvim'
+  use 'beauwilliams/focus.nvim'
 
   -- editor plugins
   use 'numtostr/comment.nvim'
@@ -875,3 +876,6 @@ vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>SymbolsOutline<cr>",
 vim.g.symbols_outline = {
   auto_preview = false,
 }
+
+-- focus
+require('focus').setup{}
