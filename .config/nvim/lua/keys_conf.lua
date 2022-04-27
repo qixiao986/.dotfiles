@@ -24,7 +24,7 @@ vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<leader>q', ':w<CR>:bd<CR>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<leader>q', ':bd!<CR>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<leader>w', ':w<CR>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', 'cp', ':let @+ = expand("%:p")<CR>', {noremap=true, silent=true})
 --" Opens a new tab with the current buffer's path
