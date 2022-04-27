@@ -38,7 +38,7 @@ packer.startup(function()
   use 'nvim-lualine/lualine.nvim'
   use 'SmiteshP/nvim-gps'
   use 'altercation/vim-colors-solarized'
-  use 'akinsho/bufferline.nvim'
+  use 'noib3/nvim-cokeline'
   use 'akinsho/toggleterm.nvim'
   use 'kevinhwang91/nvim-hlslens'
   use 'petertriho/nvim-scrollbar'
@@ -101,154 +101,10 @@ packer.startup(function()
   use { 'p00f/cphelper.nvim', lock = true }
 end)
 
-vim.opt.exrc = true
-vim.opt.backspace = { 'indent', 'eol', 'start' }
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.smarttab = true
-vim.opt.expandtab = true
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.linebreak = true
-vim.opt.sidescrolloff = 5
-vim.opt.ruler = true
-vim.opt.showcmd = true
-vim.opt.title = true
-vim.opt.joinspaces = false
-vim.opt.mouse = 'a'
-vim.opt.laststatus = 3
-vim.opt.cursorline = true
-vim.opt.wildmenu = true
-vim.opt.conceallevel = 2
-vim.opt.list = true
-vim.opt.listchars = {
-    tab = '→ ',
-    nbsp = '␣',
-    trail = '•',
-    extends = '▶',
-    precedes = '◀',
-}
-vim.opt.clipboard = vim.opt.clipboard + {'unnamed','unnamedplus'}
+require('opt_conf')
+require('keys_conf')
 
-vim.opt.undofile = true
-vim.opt.undodir=os.getenv( "HOME" ) ..'/.config/nvim/undodir'
-vim.opt.scrolloff = 3
-vim.opt.autoread = true
-vim.opt.autowriteall = true
-vim.opt.updatetime = 300
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-vim.opt.cindent = true
-vim.opt.cinoptions = {'N-s', 'g0', 'j1', '(s', 'm1'}
 
--- Searching options
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
-vim.opt.showmatch = true
-vim.opt.guicursor=[[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175]]
-vim.opt.termguicolors = true
-vim.g.firenvim_config = { localSettings = {['.*'] = {takeover= 'never', priority= 1 }}}
-
-vim.api.nvim_set_keymap('i', 'jk', '<ESC>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('i', '<C-l>', '<right>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('i', '<C-h>', '<left>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('i', '<C-j>', '<down>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('i', '<C-k>', '<up>', {noremap=true, silent=true})
-
-vim.api.nvim_set_keymap('n', '<leader>d', '"_d', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', 'yA', ':%y<CR>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', 'dA', 'gg"_dG', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', 'Y', 'y$', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', 'n', 'nzzzv', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', 'N', 'Nzzzv', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', 'J', 'mzJ`z', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('x', '<leader>d', '"_d', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', 'Zz', ':q<CR>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<CR>', '10j', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '\\', '10k', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<C-c>', ':nohl<CR><C-L>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<S-l>', ':bn<CR>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<S-h>', ':bp<CR>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<C-\\>', ':vsp<CR>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<C-_>', ':sp<CR>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<leader>q', ':w<CR>:bd<CR>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<leader>w', ':w<CR>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', 'cp', ':let @+ = expand("%:p")<CR>', {noremap=true, silent=true})
---" Opens a new tab with the current buffer's path
---" Super useful when editing files in the same directory
-vim.api.nvim_set_keymap('n', '<leader>e', ':e <C-r>=expand("%:p:h")<CR>/', {noremap=true, silent=true})
-
--- Move a line of text using ALT+[jk] or Command+[jk] on mac
-vim.api.nvim_set_keymap('n', '∆', 'mz:m+<cr>`z', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '˚', 'mz:m-2<cr>`z', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('v', '∆', ':m\'>+<cr>`<my`>mzgv`yo`z', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('v', '˚', ':m\'<-2<cr>`>my`<mzgv`yo`z', {noremap=true, silent=true})
-
---" Visual mode pressing * or # searches for the current selection
---" Super useful! From an idea by Michael Naumann
-vim.api.nvim_set_keymap('v', '*', '<cmd>lua VisualSelection("f")<cr>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('v', '#', '<cmd>lua VisualSelection("b")<cr>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('v', 'R', '<cmd>lua VisualSelection("r")<cr>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('t', '<ESC>', '<C-\\><C-n>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('c', '<C-l>', '<right>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('c', '<C-h>', '<left>', {noremap=true, silent=true})
-
-function VisualSelection(direction) 
-  vim.cmd [[normal! vgv"ky]]
-  local pattern = vim.fn.getreg('k')
-  pattern = vim.fn.escape(pattern, "\\/.*'$^~[]")
-  -- pattern = vim.fn.substitute(pattern, "2", "\\n", 'g')
-  pattern = pattern:gsub("\n", "\\n")
-  if direction == 'b' then
-      vim.fn.feedkeys('?' .. pattern .. t"<CR>")
-  elseif direction == 'r' then
-      vim.fn.feedkeys(':' .. "%s" .. '/'.. pattern .. '/')
-  elseif direction == 'f' then
-      vim.fn.feedkeys('/' .. pattern .. t"<CR>")
-  end
-end
-
-function StripTrailingWhitespaces()
-  local save_state = vim.fn.winsaveview()
-  vim.cmd[[keeppatterns %s/\s\+$//e]]
-  vim.cmd[[keeppatterns %s/\n\{3,}/\r\r/e]]
-  vim.fn.winrestview(save_state)
-end
-
-function CursorHoldWriteFile()
-  local buf_name = vim.api.nvim_buf_get_name(0)
-  local mod = vim.api.nvim_buf_get_option(0, "modifiable")
-  local buf_type = vim.api.nvim_buf_get_option(0, "buftype")
-  if mod and buf_name ~= "" and buf_type == "" then
-    vim.cmd("update")
-  end
-end
-
-vim.api.nvim_create_autocmd(
-  {"BufWritePre","FileWritePre","FileAppendPre","FilterWritePre"},
-  {pattern="*.cpp", callback = StripTrailingWhitespaces }
-)
-vim.api.nvim_create_autocmd({"BufEnter","FocusGained","InsertLeave"}, { command = "set relativenumber" })
-vim.api.nvim_create_autocmd({"BufLeave","FocusLost","InsertEnter"}, { command = "set norelativenumber" })
-vim.api.nvim_create_autocmd("CursorHold", { callback = CursorHoldWriteFile })
-vim.cmd [[set errorformat^=%-GIn\ file\ included\ %.%#]]
-vim.opt.guifont = "FiraCode Nerd Font Mono:h12"
---gui don't need set lang, terminal nvim need set lang to make the copy right
-if vim.fn.has('gui_vimr') == 0 then
-  vim.cmd [[language en_US]]
-end
-vim.cmd [[colo snazzy]]
--- vim.cmd [[colo desert]]
-vim.cmd [[highlight CursorLine term=bold cterm=bold ctermbg=none  ctermfg=none gui=bold guibg=none]]
 -- Treesitter
 local treesitter = require('nvim-treesitter.configs')
 treesitter.setup {
@@ -621,16 +477,8 @@ vim.api.nvim_set_keymap('v', '<F5>', '<Plug>SnipRun', {silent = true})
 vim.api.nvim_set_keymap('n', '<F6>', '<Plug>SnipRunOperator', {silent = true})
 vim.api.nvim_set_keymap('n', '<F5>', '<Plug>SnipRun', {silent = true})
 
--- bufferline
-require('bufferline').setup{
-	options = {
-		numbers = function(opts)
-			return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal))
-		end,
-	}
-
-}
-vim.api.nvim_set_keymap('n', '<leader>b', ':BufferLinePick<CR>', {silent = true})
+-- nvim-cokeline
+require('cokeline_conf')
 
 -- minimap
 vim.cmd [[highlight VertSplit cterm=NONE]]
@@ -743,46 +591,7 @@ vim.api.nvim_set_keymap("n", "<leader>cr", "<cmd>CphReceive<cr>", {noremap = tru
 vim.api.nvim_set_keymap("n", "<leader>ct", "<cmd>CphTest<cr>", {noremap = true, silent = true})
 
 -- alpha dashboard
-local alpha = require('alpha')
-local dashboard = require('alpha.themes.dashboard')
-function _cd_cpdir()
-  vim.cmd[[cd /Users/ndz/Documents/code/github/algo]]
-  require'nvim-tree'.change_dir('/Users/ndz/Documents/code/github/algo')
-  vim.cmd[[CphReceive]]
-end
-
-function _del_redofile()
-  os.execute('rm -f ' .. os.getenv( "HOME" ) ..'/.config/nvim/undodir/*')
-  print("done...")
-end
-dashboard.section.buttons.val = {
-  dashboard.button( "e", "  > New file" , "<cmd>ene <CR>"),
-  dashboard.button( "c", "  > Competitive", "<cmd>lua _cd_cpdir()<CR>"),
-  dashboard.button( "u", "  > Update"   , "<cmd>PackerSync<CR>"),
-  dashboard.button( "f", "  > Find Files" , "<cmd>Telescope find_files<cr>"),
-  dashboard.button( "d", "﯊  > Del RedoFile", "<cmd>lua _del_redofile()<CR>"),
-}
-dashboard.section.header.val =
-{
-'███╗   ██╗██╗██╗   ██╗██╗   ██╗██╗███╗   ███╗',
-'████╗  ██║██║██║   ██║██║   ██║██║████╗ ████║',
-'██╔██╗ ██║██║██║   ██║██║   ██║██║██╔████╔██║',
-'██║╚██╗██║██║██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║',
-'██║ ╚████║██║╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║',
-'╚═╝  ╚═══╝╚═╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝',
-}
-
-local function footer()
-  local plugins = #vim.tbl_keys(packer_plugins) --get packer_plugins plugins
-  local v = vim.version()
-  local datetime = os.date " %Y-%m-%d   %H:%M:%S"
-  return string.format(" %d   v%d.%d.%d  %s", plugins, v.major, v.minor, v.patch, datetime)
-end
-dashboard.section.footer.val = footer()
-
-alpha.setup(dashboard.opts)
-vim.api.nvim_create_autocmd({"FileType"}, {pattern={"alpha"}, command = "setlocal nofoldenable" })
-vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>Alpha<CR>', {noremap=true, silent=true})
+require('alpha_conf')
 
 -- nvim-gps
 local gps = require('nvim-gps')
