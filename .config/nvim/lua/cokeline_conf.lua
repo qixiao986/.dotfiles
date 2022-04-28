@@ -5,12 +5,16 @@ local comments_fg = get_hex('Comment', 'fg')
 local errors_fg = get_hex('DiagnosticError', 'fg')
 local warnings_fg = get_hex('DiagnosticWarn', 'fg')
 
+local normal_bg = get_hex('Normal', 'bg')
+vim.cmd('hi TabLineFill guibg=' .. normal_bg)
+
 local red = vim.g.terminal_color_1
 local yellow = vim.g.terminal_color_3
 
 local components = {
   space = {
     text = ' ',
+    bg = get_hex('Normal', 'bg'),
     truncation = { priority = 1 }
   },
 
@@ -124,7 +128,7 @@ require('cokeline').setup({
   buffers = {
     -- filter_valid = function(buffer) return buffer.type ~= 'terminal' end,
     -- filter_visible = function(buffer) return buffer.type ~= 'terminal' end,
-    new_buffers_position = 'next',
+    new_buffers_position = 'last',
   },
 
   rendering = {
@@ -141,11 +145,21 @@ require('cokeline').setup({
     bg = get_hex('ColorColumn', 'bg'),
   },
 
+  sidebar = {
+    filetype = 'CHADTree',
+    components = {
+      {
+        text = ' CHADTree ',
+        fg = yellow,
+        bg = get_hex('NvimTreeNormal', 'bg'),
+        style = 'bold',
+      },
+    }
+  },
+
   components = {
     components.separator_left,
-    components.space,
     components.devicon,
-    components.space,
     components.index,
     components.unique_prefix,
     components.filename,
@@ -153,5 +167,6 @@ require('cokeline').setup({
     components.two_spaces,
     components.close_or_unsaved,
     components.separator_right,
+    components.space,
   },
 })

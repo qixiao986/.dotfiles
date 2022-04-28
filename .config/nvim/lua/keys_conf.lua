@@ -1,3 +1,8 @@
+require('utils_conf')
+
+vim.g.mapleader = t'<Space>'
+vim.g.maplocalleader = t'<Space>'
+
 vim.api.nvim_set_keymap('i', 'jk', '<ESC>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('i', '<C-l>', '<right>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('i', '<C-h>', '<left>', {noremap=true, silent=true})
@@ -18,6 +23,8 @@ vim.api.nvim_set_keymap('n', '\\', '10k', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<C-c>', ':nohl<CR><C-L>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<S-l>', ':bn<CR>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<S-h>', ':bp<CR>', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<Tab>', '<Plug>(cokeline-focus-next)', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<S-Tab>', '<Plug>(cokeline-focus-prev)', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<C-\\>', ':vsp<CR>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<C-_>', ':sp<CR>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', {noremap=true, silent=true})
@@ -46,18 +53,4 @@ vim.api.nvim_set_keymap('t', '<ESC>', '<C-\\><C-n>', {noremap=true, silent=true}
 vim.api.nvim_set_keymap('c', '<C-l>', '<right>', {noremap=true, silent=true})
 vim.api.nvim_set_keymap('c', '<C-h>', '<left>', {noremap=true, silent=true})
 
-function VisualSelection(direction) 
-  vim.cmd [[normal! vgv"ky]]
-  local pattern = vim.fn.getreg('k')
-  pattern = vim.fn.escape(pattern, "\\/.*'$^~[]")
-  -- pattern = vim.fn.substitute(pattern, "2", "\\n", 'g')
-  pattern = pattern:gsub("\n", "\\n")
-  if direction == 'b' then
-      vim.fn.feedkeys('?' .. pattern .. t"<CR>")
-  elseif direction == 'r' then
-      vim.fn.feedkeys(':' .. "%s" .. '/'.. pattern .. '/')
-  elseif direction == 'f' then
-      vim.fn.feedkeys('/' .. pattern .. t"<CR>")
-  end
-end
 

@@ -1,3 +1,5 @@
+require('utils_conf')
+
 vim.opt.exrc = true
 vim.opt.backspace = { 'indent', 'eol', 'start' }
 vim.opt.softtabstop = 2
@@ -61,22 +63,6 @@ vim.opt.guicursor=[[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-
 vim.opt.termguicolors = true
 vim.g.firenvim_config = { localSettings = {['.*'] = {takeover= 'never', priority= 1 }}}
 
-function StripTrailingWhitespaces()
-  local save_state = vim.fn.winsaveview()
-  vim.cmd[[keeppatterns %s/\s\+$//e]]
-  vim.cmd[[keeppatterns %s/\n\{3,}/\r\r/e]]
-  vim.fn.winrestview(save_state)
-end
-
-function CursorHoldWriteFile()
-  local buf_name = vim.api.nvim_buf_get_name(0)
-  local mod = vim.api.nvim_buf_get_option(0, "modifiable")
-  local buf_type = vim.api.nvim_buf_get_option(0, "buftype")
-  if mod and buf_name ~= "" and buf_type == "" then
-    vim.cmd("update")
-  end
-end
-
 vim.api.nvim_create_autocmd(
   {"BufWritePre","FileWritePre","FileAppendPre","FilterWritePre"},
   {pattern="*.cpp", callback = StripTrailingWhitespaces }
@@ -84,3 +70,4 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_autocmd({"BufEnter","FocusGained","InsertLeave"}, { command = "set relativenumber" })
 vim.api.nvim_create_autocmd({"BufLeave","FocusLost","InsertEnter"}, { command = "set norelativenumber" })
 vim.api.nvim_create_autocmd("CursorHold", { callback = CursorHoldWriteFile })
+

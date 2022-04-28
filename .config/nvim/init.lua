@@ -1,11 +1,4 @@
--- Concise way to escape termcodes
-local function t(str)
-    -- Adjust boolean arguments as needed
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
-vim.g.mapleader = t'<Space>'
-vim.g.maplocalleader = t'<Space>'
+require('utils_conf')
 
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
@@ -103,7 +96,6 @@ end)
 
 require('opt_conf')
 require('keys_conf')
-
 
 -- Treesitter
 local treesitter = require('nvim-treesitter.configs')
