@@ -334,8 +334,8 @@ require('telescope').setup {
 		}
 	}
 }
-vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>Telescope find_files<CR>', {noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', {noremap=true, silent=true})
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
+vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<CR>')
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
@@ -344,7 +344,7 @@ require('telescope').load_extension('fzf')
 -- empty setup using defaults: add your own options
 require'nvim-tree'.setup {
 }
-vim.api.nvim_set_keymap('n', '<leader>t', ':NvimTreeToggle<CR>', {noremap=true, silent=true})
+vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>')
 require'nvim-web-devicons'.setup {
  -- your personnal icons can go here (to override)
  -- you can specify color or cterm_color instead of specifying both of them
@@ -371,9 +371,9 @@ require('sniprun').setup {
     "TempFloatingWindow",      --# display results in a floating window
   },
 }
-vim.api.nvim_set_keymap('v', '<F5>', '<Plug>SnipRun', {silent = true})
-vim.api.nvim_set_keymap('n', '<F6>', '<Plug>SnipRunOperator', {silent = true})
-vim.api.nvim_set_keymap('n', '<F5>', '<Plug>SnipRun', {silent = true})
+vim.keymap.set('v', '<F5>', '<Plug>SnipRun')
+vim.keymap.set('n', '<F6>', '<Plug>SnipRunOperator')
+vim.keymap.set('n', '<F5>', '<Plug>SnipRun')
 
 -- nvim-cokeline
 require('cokeline_conf')
@@ -417,14 +417,14 @@ function _gccrun_toggle()
   vim.cmd[[3TermExec cmd="%:p:h/%:t:r"]]
 end
 
-vim.api.nvim_set_keymap("", "<F3>", "<cmd>lua _gccomplie_toggle()<CR>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("", "<F4>", "<cmd>lua _gccrun_toggle()<CR>", {noremap = true, silent = true})
+vim.keymap.set("n", "<F3>", _gccomplie_toggle)
+vim.keymap.set("n", "<F4>", _gccrun_toggle)
 
 local lazygit = Terminal:new({ cmd = "lazygit", count=5, hidden = true })
 function _lazygit_toggle()
   lazygit:toggle()
 end
-vim.api.nvim_set_keymap("n", "<F2>", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+vim.keymap.set("n", "<F2>", _lazygit_toggle)
 
 -- spectre
 require('spectre').setup {
@@ -442,7 +442,7 @@ require('spectre').setup {
       }
   },
 }
-vim.api.nvim_set_keymap("n", "<leader>z", "<cmd>lua require('spectre').open_file_search()<cr>", {noremap = true, silent = true})
+vim.keymap.set("n", "<leader>z", require('spectre').open_file_search)
 
 -- nvim-hlslens
 local kopts = {noremap = true, silent = true}
@@ -485,8 +485,8 @@ vim.api.nvim_create_autocmd({"BufEnter"}, { command = "ColorizerAttachToBuffer" 
 -- cphelper
 vim.g.cphdir = t'/Users/ndz/Documents/code/github/algo/contests'
 vim.g.cpp_compile_command = 'g++-11 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL solution.cpp -o cpp.out'
-vim.api.nvim_set_keymap("n", "<leader>cr", "<cmd>CphReceive<cr>", {noremap = true, silent = true})
-vim.api.nvim_set_keymap("n", "<leader>ct", "<cmd>CphTest<cr>", {noremap = true, silent = true})
+vim.keymap.set("n", "<leader>cr", "<cmd>CphReceive<cr>")
+vim.keymap.set("n", "<leader>ct", "<cmd>CphTest<cr>")
 
 -- alpha dashboard
 require('alpha_conf')
@@ -523,9 +523,9 @@ cmp_autopairs.lisp[#cmp_autopairs.lisp+1] = "racket"
 
 -- copilot
 vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap("i", "<C-o>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-vim.api.nvim_set_keymap('i', '‘', '<Plug>(copilot-next)', {silent = true}) -- alt-]
-vim.api.nvim_set_keymap('i', '“', '<Plug>(copilot-previous)', {silent = true}) --alt-[
+vim.keymap.set("i", "<C-o>", 'copilot#Accept("<CR>")')
+vim.keymap.set('i', '‘', '<Plug>(copilot-next)') -- alt-]
+vim.keymap.set('i', '“', '<Plug>(copilot-previous)') --alt-[
 
 --which key
 require("which-key").setup {}
@@ -535,31 +535,19 @@ require("indent_blankline").setup {}
 vim.g.indent_blankline_filetype_exclude = vim.list_extend(vim.g.indent_blankline_filetype_exclude,{"alpha", "CHADTree", "NvimTree"})
 
 --chadtree
-vim.api.nvim_set_keymap('n', '<leader>v', '<cmd>CHADopen<cr>', {noremap=true, silent=true})
+vim.keymap.set('n', '<leader>v', '<cmd>CHADopen<cr>')
 
 -- marks
 require('marks').setup{}
 
 -- trouble
 require('trouble').setup{}
-vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>",
-  {silent = true, noremap = true}
-)
-vim.api.nvim_set_keymap("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>",
-  {silent = true, noremap = true}
-)
-vim.api.nvim_set_keymap("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>",
-  {silent = true, noremap = true}
-)
-vim.api.nvim_set_keymap("n", "<leader>xl", "<cmd>Trouble loclist<cr>",
-  {silent = true, noremap = true}
-)
-vim.api.nvim_set_keymap("n", "<leader>xq", "<cmd>Trouble quickfix<cr>",
-  {silent = true, noremap = true}
-)
-vim.api.nvim_set_keymap("n", "gR", "<cmd>Trouble lsp_references<cr>",
-  {silent = true, noremap = true}
-)
+vim.keymap.set("n", "<leader>xx", "<cmd>Trouble<cr>")
+vim.keymap.set("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>")
+vim.keymap.set("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>")
+vim.keymap.set("n", "<leader>xl", "<cmd>Trouble loclist<cr>")
+vim.keymap.set("n", "<leader>xq", "<cmd>Trouble quickfix<cr>")
+vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<cr>")
 
 -- nvim-lightbulb
 vim.api.nvim_create_autocmd( "CursorHold", {
@@ -577,9 +565,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 })
 
 -- symbols-outline
-vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>SymbolsOutline<cr>",
-  {silent = true, noremap = true}
-)
+vim.keymap.set("n", "<leader>s", "<cmd>SymbolsOutline<cr>")
 vim.g.symbols_outline = {
   auto_preview = false,
 }

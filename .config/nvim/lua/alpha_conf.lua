@@ -37,5 +37,5 @@ dashboard.section.footer.val = footer()
 
 alpha.setup(dashboard.opts)
 vim.api.nvim_create_autocmd({"FileType"}, {pattern={"alpha"}, command = "setlocal nofoldenable" })
-vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>Alpha<CR>', {noremap=true, silent=true})
+vim.keymap.set('n', '<leader>a', '<cmd>Alpha<CR>')
 
