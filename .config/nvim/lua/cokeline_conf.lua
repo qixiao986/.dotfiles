@@ -170,3 +170,7 @@ require('cokeline').setup({
     components.space,
   },
 })
+
+vim.api.nvim_set_keymap('n', '<Tab>', '<Plug>(cokeline-focus-next)', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<S-Tab>', '<Plug>(cokeline-focus-prev)', {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<leader>b', '<Plug>(cokeline-pick-focus)', {noremap=true, silent=true})
