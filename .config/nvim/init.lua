@@ -523,7 +523,7 @@ cmp_autopairs.lisp[#cmp_autopairs.lisp+1] = "racket"
 
 -- copilot
 vim.g.copilot_no_tab_map = true
-vim.keymap.set("i", "<C-o>", 'copilot#Accept("<CR>")')
+vim.keymap.set("i", "<C-o>", 'copilot#Accept("<CR>")', {expr = true})
 vim.keymap.set('i', '‘', '<Plug>(copilot-next)') -- alt-]
 vim.keymap.set('i', '“', '<Plug>(copilot-previous)') --alt-[
 
