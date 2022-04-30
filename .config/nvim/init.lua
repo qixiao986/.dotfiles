@@ -18,6 +18,8 @@ vim.opt.foldlevel = 1
 
 -- LSP
 local nvim_lsp = require('lspconfig')
+-- lspsaga
+require 'lspsaga'.setup {}
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -64,21 +66,19 @@ local lsp_on_attach = function(client, bufnr)
   -- buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<Leader>lq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   buf_set_keymap('n', '<Leader>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+  buf_set_keymap("n", "<Leader>lr", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
+  buf_set_keymap("n", "<Leader>lc", "<cmd>CodeActionMenu<cr>", {silent = true, noremap = true})
+  buf_set_keymap("x", "gx", ":<c-u>CodeActionMenu<cr>", {silent = true, noremap = true})
+  buf_set_keymap("n", "K",  "<cmd>Lspsaga hover_doc<cr>", {silent = true, noremap = true})
+  buf_set_keymap("n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent = true, noremap = true})
+  buf_set_keymap("n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent = true, noremap = true})
+  buf_set_keymap("n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
+  buf_set_keymap("n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
+  buf_set_keymap("n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
+
 end
 
--- lspsaga
-require 'lspsaga'.setup {}
---- In lsp attach function
-local map = vim.api.nvim_buf_set_keymap
-map(0, "n", "<Leader>lr", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
-map(0, "n", "<Leader>lc", "<cmd>CodeActionMenu<cr>", {silent = true, noremap = true})
-map(0, "x", "gx", ":<c-u>CodeActionMenu<cr>", {silent = true, noremap = true})
-map(0, "n", "K",  "<cmd>Lspsaga hover_doc<cr>", {silent = true, noremap = true})
-map(0, "n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent = true, noremap = true})
-map(0, "n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent = true, noremap = true})
-map(0, "n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
-map(0, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
-map(0, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
 
 -- nvim-code-action-menu
 vim.g.code_action_menu_show_details = true
