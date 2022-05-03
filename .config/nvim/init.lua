@@ -90,7 +90,7 @@ vim.g.UltiSnipsJumpForwardTrigger = '<Plug>(ultisnips_jump_forward)'
 vim.g.UltiSnipsJumpBackwardTrigger = '<Plug>(ultisnips_jump_backward)'
 vim.g.UltiSnipsListSnippets = '<c-x><c-s>'
 vim.g.UltiSnipsRemoveSelectModeMappings = 0
-vim.g.UltiSnipsSnippetDirectories = {os.getenv( "HOME" ) .. '/.config/coc/ultisnips/'}
+vim.g.UltiSnipsSnippetDirectories = {os.getenv( "HOME" ) .. '/.config/coc/ultisnips/', os.getenv( "HOME" ) .. '/.local/share/nvim/site/pack/packer/start/vim-snippets/UltiSnips/'}
 local cmp = require'cmp'
 cmp.setup({
   completion = {
