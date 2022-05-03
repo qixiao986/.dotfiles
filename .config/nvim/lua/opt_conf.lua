@@ -30,7 +30,7 @@ vim.opt.listchars = {
     extends = '▶',
     precedes = '◀',
 }
-vim.opt.clipboard = vim.opt.clipboard + {'unnamed','unnamedplus'}
+vim.opt.clipboard:append('unnamed,unnamedplus')
 
 vim.opt.undofile = true
 vim.opt.undodir=os.getenv( "HOME" ) ..'/.config/nvim/undodir'
@@ -43,7 +43,7 @@ vim.opt.splitbelow = true
 vim.opt.cindent = true
 vim.opt.cinoptions = {'N-s', 'g0', 'j1', '(s', 'm1'}
 
-vim.cmd [[set errorformat^=%-GIn\ file\ included\ %.%#]]
+vim.opt.errorformat:prepend('%-GIn file included %.%#')
 vim.opt.guifont = "FiraCode Nerd Font Mono:h12"
 --gui don't need set lang, terminal nvim need set lang to make the copy right
 if vim.fn.has('gui_vimr') == 0 then
@@ -54,6 +54,7 @@ vim.cmd [[colo snazzy]]
 vim.cmd [[highlight CursorLine term=bold cterm=bold ctermbg=none  ctermfg=none gui=bold guibg=none]]
 
 -- Searching options
+vim.opt.path:append('.,**')
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = true
