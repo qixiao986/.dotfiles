@@ -36,6 +36,8 @@ packer.startup(function()
   use 'goolord/alpha-nvim'
   use 'lukas-reineke/indent-blankline.nvim'
   use 'beauwilliams/focus.nvim'
+  use { 'folke/zen-mode.nvim' }
+  use { 'folke/twilight.nvim' }
 
   -- editor plugins
   use 'numtostr/comment.nvim'
@@ -63,6 +65,8 @@ packer.startup(function()
   use 'folke/trouble.nvim'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/playground'
+  use { 'nvim-treesitter/nvim-treesitter-textobjects' }
+  use { 'nvim-treesitter/nvim-treesitter-refactor' }
   use 'p00f/nvim-ts-rainbow'
 
 

@@ -44,14 +44,14 @@ vim.opt.cindent = true
 vim.opt.cinoptions = {'N-s', 'g0', 'j1', '(s', 'm1'}
 
 vim.opt.errorformat:prepend('%-GIn file included %.%#')
-vim.opt.guifont = "FiraCode Nerd Font Mono:h12"
+vim.opt.guifont = "JetBrainsMono Nerd Font:h12"
 --gui don't need set lang, terminal nvim need set lang to make the copy right
 if vim.fn.has('gui_vimr') == 0 then
   vim.cmd [[language en_US]]
 end
 vim.cmd [[colo snazzy]]
 -- vim.cmd [[colo desert]]
-vim.cmd [[highlight CursorLine term=bold cterm=bold ctermbg=none  ctermfg=none gui=bold guibg=none]]
+vim.cmd [[highlight CursorLine term=bold,italic cterm=bold,italic ctermbg=none  ctermfg=none gui=bold,italic guibg=none]]
 
 -- Searching options
 vim.opt.path:append('.,**')

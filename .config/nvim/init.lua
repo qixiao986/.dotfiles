@@ -6,10 +6,74 @@ require('keys_conf')
 -- Treesitter
 local treesitter = require('nvim-treesitter.configs')
 treesitter.setup {
-    ensure_installed = {'c', 'cpp', 'python', 'lua', 'javascript', 'html', 'css', 'vim'},
-    highlight = { enable = true },
-    indent = { enable = true },
-    rainbow = { enable = true, extended_mode = true, },
+  ensure_installed = {'c', 'cpp', 'python', 'lua', 'javascript', 'html', 'css', 'vim'},
+  highlight = { enable = true },
+  indent = { enable = true },
+  rainbow = { enable = true, extended_mode = true, },
+  incremental_selection = { enable = true },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<leader>l"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["<leader>h"] = "@parameter.inner",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+    lsp_interop = {
+      enable = true,
+      border = 'none',
+      peek_definition_code = {
+        ["<leader>df"] = "@function.outer",
+        ["<leader>dF"] = "@class.outer",
+      },
+    },
+  },
+  refactor = {
+    highlight_definitions = { enable = true },
+    highlight_current_scope = { enable = true },
+    navigation = {
+      enable = true,
+      keymaps = {
+        goto_definition = "gnd",
+        list_definitions = "gnD",
+        list_definitions_toc = "gO",
+        goto_next_usage = "°", --<alt-*>
+        goto_previous_usage = "‹", --<alt-#>
+      },
+    },
+  },
 }
 
 vim.opt.foldmethod = 'expr'
@@ -442,7 +506,6 @@ require('spectre').setup {
       }
   },
 }
-vim.keymap.set("n", "<leader>z", require('spectre').open_file_search)
 
 -- nvim-hlslens
 local kopts = {noremap = true, silent = true}
@@ -572,3 +635,10 @@ vim.g.symbols_outline = {
 
 -- focus
 require('focus').setup{}
+
+-- zen-mode
+require('zen-mode').setup{}
+vim.keymap.set("n", "<leader>z", require('zen-mode').toggle)
+
+-- twilight
+require('twilight').setup{}
