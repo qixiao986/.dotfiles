@@ -408,7 +408,7 @@ require('telescope').load_extension('fzf')
 -- empty setup using defaults: add your own options
 require'nvim-tree'.setup {
 }
-vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>')
+vim.keymap.set('n', '<leader>t', '<cmd>NvimTreeToggle<CR>')
 require'nvim-web-devicons'.setup {
  -- your personnal icons can go here (to override)
  -- you can specify color or cterm_color instead of specifying both of them

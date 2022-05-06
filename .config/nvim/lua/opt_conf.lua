@@ -52,7 +52,7 @@ end
 vim.cmd [[colo snazzy]]
 -- vim.cmd [[colo desert]]
 vim.cmd [[highlight CursorLine term=bold,italic cterm=bold,italic ctermbg=none  ctermfg=none gui=bold,italic guibg=none]]
-
+vim.cmd [[highlight Cursor guibg=#fc0303]]
 -- Searching options
 vim.opt.path:append('.,**')
 vim.opt.ignorecase = true
