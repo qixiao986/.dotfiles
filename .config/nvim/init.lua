@@ -642,3 +642,6 @@ vim.keymap.set("n", "<leader>z", require('zen-mode').toggle)
 
 -- twilight
 require('twilight').setup{}
+
+-- leap
+require('leap').set_default_keymaps()

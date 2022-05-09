@@ -22,7 +22,7 @@ packer.startup(function()
   -- Navigation plugins
   use { 'kyazdani42/nvim-web-devicons', opt = false }
   use 'kyazdani42/nvim-tree.lua'
-  use 'ggandor/lightspeed.nvim'
+  use 'ggandor/leap.nvim'
   use { 'ms-jpq/chadtree', branch='chad', run = 'python3 -m chadtree deps' }
 
   -- UI Plugins
