@@ -481,9 +481,6 @@ function _gccrun_toggle()
   vim.cmd[[3TermExec cmd="%:p:h/%:t:r"]]
 end
 
-vim.keymap.set("n", "<F3>", _gccomplie_toggle)
-vim.keymap.set("n", "<F4>", _gccrun_toggle)
-
 local lazygit = Terminal:new({ cmd = "lazygit", count=5, hidden = true })
 function _lazygit_toggle()
   lazygit:toggle()
@@ -645,3 +642,25 @@ require('twilight').setup{}
 
 -- leap
 require('leap').set_default_keymaps()
+
+-- possession
+require('possession').setup{
+  commands = {
+    save = 'SSave',
+    load = 'SLoad',
+    delete = 'SDelete',
+    list = 'SList',
+  }
+}
+require('telescope').load_extension('possession')
+
+-- toggletasks
+require('toggletasks').setup{
+  scan = {
+    dirs = {
+      os.getenv('HOME') .. '/.config/nvim/',
+    },
+  },
+}
+require('telescope').load_extension('toggletasks')
+vim.keymap.set("n", "<F3>", require('telescope').extensions.toggletasks.spawn, {desc = 'toggletasks: spawn'})

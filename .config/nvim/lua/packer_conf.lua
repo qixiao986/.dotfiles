@@ -38,6 +38,8 @@ packer.startup(function()
   use 'beauwilliams/focus.nvim'
   use { 'folke/zen-mode.nvim' }
   use { 'folke/twilight.nvim' }
+  use { 'jedrzejboczar/possession.nvim' }
+  use { 'jedrzejboczar/toggletasks.nvim' }
 
   -- editor plugins
   use 'numtostr/comment.nvim'
