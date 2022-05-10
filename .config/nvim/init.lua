@@ -664,3 +664,4 @@ require('toggletasks').setup{
 }
 require('telescope').load_extension('toggletasks')
 vim.keymap.set("n", "<F3>", require('telescope').extensions.toggletasks.spawn, {desc = 'toggletasks: spawn'})
+vim.keymap.set("n", "<F4>", require('telescope').extensions.toggletasks.select, {desc = 'toggletasks: select'})

@@ -2,7 +2,7 @@
   "tasks": [
     {
       "name": "g++ compile",
-      "cmd": "g++-11 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL ${file:r}.cpp -o ${file:r}",
+      "cmd": "g++-11 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL ${file:r}.cpp -o ${file:r} && ${file:p:h}/${file:t:r}",
       "tags": ["cp"]
     },
     {
