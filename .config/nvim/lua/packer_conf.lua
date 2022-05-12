@@ -26,7 +26,7 @@ packer.startup(function()
   use { 'ms-jpq/chadtree', branch='chad', run = 'python3 -m chadtree deps' }
 
   -- UI Plugins
-  use 'nvim-lualine/lualine.nvim'
+  use { 'rebelot/heirline.nvim' }
   use 'SmiteshP/nvim-gps'
   use 'altercation/vim-colors-solarized'
   use 'noib3/nvim-cokeline'

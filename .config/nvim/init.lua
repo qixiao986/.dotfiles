@@ -556,14 +556,8 @@ local gps = require('nvim-gps')
 gps.setup{}
 
 
--- lualine
-require('lualine').setup{
-	options = {
-    theme = 'nightfly',
-    globalstatus = true,
-  },
-  sections = { lualine_c = { "filename", {gps.get_location, cond=gps.is_available} } }
-}
+-- heirline
+require('heirline_conf')
 
 -- nvim-autoapirs
 local npairs = require('nvim-autopairs')
