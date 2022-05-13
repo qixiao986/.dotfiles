@@ -56,6 +56,7 @@ packer.startup(function()
   use { 'michaelb/sniprun', run = 'bash ./install.sh' }
   use 'windwp/nvim-spectre'
   use 'github/copilot.vim'
+  use { 'mizlan/iswap.nvim' }
 
   -- lsp plugins
   use 'neovim/nvim-lspconfig'
@@ -69,6 +70,7 @@ packer.startup(function()
   use 'nvim-treesitter/playground'
   use { 'nvim-treesitter/nvim-treesitter-textobjects' }
   use { 'nvim-treesitter/nvim-treesitter-refactor' }
+  use { 'nvim-treesitter/nvim-treesitter-context' }
   use 'p00f/nvim-ts-rainbow'
 
 

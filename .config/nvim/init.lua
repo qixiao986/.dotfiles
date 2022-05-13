@@ -22,15 +22,6 @@ treesitter.setup {
         ["ic"] = "@class.inner",
       },
     },
-    swap = {
-      enable = true,
-      swap_next = {
-        ["<leader>l"] = "@parameter.inner",
-      },
-      swap_previous = {
-        ["<leader>h"] = "@parameter.inner",
-      },
-    },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
@@ -79,6 +70,9 @@ treesitter.setup {
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldlevel = 1
+
+-- treesitter-context
+require'treesitter-context'.setup{}
 
 -- LSP
 local nvim_lsp = require('lspconfig')
@@ -659,3 +653,9 @@ require('toggletasks').setup{
 require('telescope').load_extension('toggletasks')
 vim.keymap.set("n", "<F3>", require('telescope').extensions.toggletasks.spawn, {desc = 'toggletasks: spawn'})
 vim.keymap.set("n", "<F4>", require('telescope').extensions.toggletasks.select, {desc = 'toggletasks: select'})
+
+-- iswap
+require('iswap').setup{
+  autoswap = true,
+}
+vim.keymap.set("n", "<leader>h", "<cmd>ISwap<cr>")
