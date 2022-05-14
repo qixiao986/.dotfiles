@@ -24,6 +24,7 @@ packer.startup(function()
   use 'kyazdani42/nvim-tree.lua'
   use 'ggandor/leap.nvim'
   use { 'ms-jpq/chadtree', branch='chad', run = 'python3 -m chadtree deps' }
+  use { 'nacro90/numb.nvim' }
 
   -- UI Plugins
   use { 'rebelot/heirline.nvim' }

@@ -659,3 +659,6 @@ require('iswap').setup{
   autoswap = true,
 }
 vim.keymap.set("n", "<leader>h", "<cmd>ISwap<cr>")
+
+-- numb
+require('numb').setup{}
