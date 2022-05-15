@@ -606,11 +606,7 @@ vim.api.nvim_create_autocmd( "CursorHold", {
 
 -- lsp-status
 require('lsp-status').config{}
-vim.api.nvim_create_autocmd("CursorHold", {
-  callback = function()
-    require('lsp-status/current_function').update()
-  end
-})
+
 
 -- symbols-outline
 vim.keymap.set("n", "<leader>s", "<cmd>SymbolsOutline<cr>")
@@ -662,3 +658,6 @@ vim.keymap.set("n", "<leader>h", "<cmd>ISwap<cr>")
 
 -- numb
 require('numb').setup{}
+
+-- null-ls
+require("null-ls_conf")

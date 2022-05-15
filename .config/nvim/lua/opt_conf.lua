@@ -15,6 +15,7 @@ vim.opt.linebreak = true
 vim.opt.sidescrolloff = 5
 vim.opt.ruler = true
 vim.opt.showcmd = true
+vim.opt.cmdheight = 2
 vim.opt.title = true
 vim.opt.joinspaces = false
 vim.opt.mouse = 'a'

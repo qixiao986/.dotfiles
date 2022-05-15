@@ -73,6 +73,7 @@ packer.startup(function()
   use { 'nvim-treesitter/nvim-treesitter-refactor' }
   use { 'nvim-treesitter/nvim-treesitter-context' }
   use 'p00f/nvim-ts-rainbow'
+  use { 'jose-elias-alvarez/null-ls.nvim', disable = false }
 
 
   -- cmp
