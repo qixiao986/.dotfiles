@@ -398,20 +398,10 @@ vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<CR>')
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
 
--- nvim tree
--- empty setup using defaults: add your own options
-require'nvim-tree'.setup {
-}
-vim.keymap.set('n', '<leader>t', '<cmd>NvimTreeToggle<CR>')
-require'nvim-web-devicons'.setup {
- -- your personnal icons can go here (to override)
- -- you can specify color or cterm_color instead of specifying both of them
- -- DevIcon will be appended to `name`
-
- -- globally enable default icons (default to false)
- -- will get overriden by `get_icons` option
- default = true;
-}
+-- neo-tree
+vim.g.neo_tree_remove_legacy_commands = 1
+require("neo-tree").setup{}
+vim.keymap.set('n', '<leader>t', '<cmd>Neotree toggle<CR>')
 
 -- comment
 require('Comment').setup {
@@ -580,10 +570,7 @@ require("which-key").setup {}
 
 -- indent line
 require("indent_blankline").setup {}
-vim.g.indent_blankline_filetype_exclude = vim.list_extend(vim.g.indent_blankline_filetype_exclude,{"alpha", "CHADTree", "NvimTree"})
-
---chadtree
-vim.keymap.set('n', '<leader>v', '<cmd>CHADopen<cr>')
+vim.g.indent_blankline_filetype_exclude = vim.list_extend(vim.g.indent_blankline_filetype_exclude,{"alpha", "neo-tree"})
 
 -- marks
 require('marks').setup{}

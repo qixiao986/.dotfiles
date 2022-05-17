@@ -152,10 +152,10 @@ require('cokeline').setup({
   },
 
   sidebar = {
-    filetype = 'CHADTree',
+    filetype = 'neo-tree',
     components = {
       {
-        text = ' CHADTree ',
+        text = ' neo-tree ',
         fg = yellow,
         bg = get_hex('NvimTreeNormal', 'bg'),
         style = 'bold',

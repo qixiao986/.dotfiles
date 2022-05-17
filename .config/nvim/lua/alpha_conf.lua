@@ -2,7 +2,6 @@ local alpha = require('alpha')
 local dashboard = require('alpha.themes.dashboard')
 function _cd_cpdir()
   vim.cmd[[cd /Users/ndz/Documents/code/github/algo]]
-  require'nvim-tree'.change_dir('/Users/ndz/Documents/code/github/algo')
   vim.cmd[[CphReceive]]
 end
 

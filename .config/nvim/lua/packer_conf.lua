@@ -21,9 +21,16 @@ packer.startup(function()
 
   -- Navigation plugins
   use { 'kyazdani42/nvim-web-devicons', opt = false }
-  use 'kyazdani42/nvim-tree.lua'
+  use {
+  "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    requires = { 
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    }
+  }
   use 'ggandor/leap.nvim'
-  use { 'ms-jpq/chadtree', branch='chad', run = 'python3 -m chadtree deps' }
   use { 'nacro90/numb.nvim' }
 
   -- UI Plugins
@@ -48,7 +55,7 @@ packer.startup(function()
   use 'windwp/nvim-autopairs'
   use 'tpope/vim-surround'
   use 'lewis6991/gitsigns.nvim'
-  use { 'chentau/marks.nvim', lock = true }
+  use { 'chentoast/marks.nvim', lock = true }
   use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
