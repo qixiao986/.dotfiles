@@ -317,48 +317,24 @@ for _, lsp in ipairs(servers) do
 end
 
 local lspkind = require('lspkind')
-local kind_icons = {
-  Text = "",
-  Method = "",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "ﴯ",
-  Interface = "",
-  Module = "",
-  Property = "ﰠ",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
-  Operator = "",
-  TypeParameter = ""
-}
 cmp.setup {
   formatting = {
-    format = function(entry, vim_item)
-      -- Kind icons
-      vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-      -- Source
-      vim_item.menu = ({
-        buffer = "[Buffer]",
-        nvim_lsp = "[LSP]",
-        luasnip = "[LuaSnip]",
-        nvim_lua = "[Lua]",
-        latex_symbols = "[LaTeX]",
-      })[entry.source.name]
-      return vim_item
-    end
+    format = lspkind.cmp_format({
+      mode = 'symbol',
+      maxwidth = 50,
+      before = function(entry, vim_item)
+        vim_item.menu = ({
+          buffer = "[Buffer]",
+          nvim_lsp = "[LSP]",
+          luasnip = "[LuaSnip]",
+          nvim_lua = "[Lua]",
+          latex_symbols = "[LaTeX]",
+          ultisnips = "[UltiSnip]",
+          path = "[Path]",
+        })[entry.source.name]
+        return vim_item
+      end
+    })
   },
 }
 
@@ -400,7 +376,15 @@ require('telescope').load_extension('fzf')
 
 -- neo-tree
 vim.g.neo_tree_remove_legacy_commands = 1
-require("neo-tree").setup{}
+require("neo-tree").setup{
+  default_component_configs = {
+    git_status = {
+      symbols = {
+        unstaged  = "ﱵ",
+      }
+    },
+  },
+}
 vim.keymap.set('n', '<leader>t', '<cmd>Neotree toggle<CR>')
 
 -- comment
