@@ -6,7 +6,7 @@ require('keys_conf')
 -- Treesitter
 local treesitter = require('nvim-treesitter.configs')
 treesitter.setup {
-  ensure_installed = {'c', 'cpp', 'python', 'lua', 'javascript', 'html', 'css', 'vim'},
+  ensure_installed = {'c', 'cpp', 'java', 'python', 'lua', 'javascript', 'html', 'css', 'vim'},
   highlight = { enable = true },
   indent = { enable = true },
   rainbow = { enable = true, extended_mode = true, },
@@ -385,7 +385,7 @@ require("neo-tree").setup{
     },
   },
 }
-vim.keymap.set('n', '<leader>t', '<cmd>Neotree toggle<CR>')
+vim.keymap.set('n', '<leader>t', '<cmd>Neotree reveal toggle<CR>')
 
 -- comment
 require('Comment').setup {
@@ -395,7 +395,7 @@ require('Comment').setup {
 require('sniprun').setup {
 	interpreter_options = {
         Cpp_original = {
-            compiler = "g++-11"
+            compiler = "g++-12"
             }
         },
   --# you can combo different display modes as desired
@@ -442,7 +442,7 @@ local gccomplie = Terminal:new({
 })
 function _gccomplie_toggle()
   vim.cmd[[w]]
-  vim.cmd[[3TermExec cmd="g++-11 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL %:r.cpp -o %:r"]]
+  vim.cmd[[3TermExec cmd="g++-12 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL %:r.cpp -o %:r"]]
 end
 
 function _gccrun_toggle()
@@ -512,7 +512,7 @@ vim.api.nvim_create_autocmd({"BufEnter"}, { command = "ColorizerAttachToBuffer" 
 
 -- cphelper
 vim.g.cphdir = t'/Users/ndz/Documents/code/github/algo/contests'
-vim.g.cpp_compile_command = 'g++-11 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL solution.cpp -o cpp.out'
+vim.g.cpp_compile_command = 'g++-12 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL solution.cpp -o cpp.out'
 vim.keymap.set("n", "<leader>cr", "<cmd>CphReceive<cr>")
 vim.keymap.set("n", "<leader>ct", "<cmd>CphTest<cr>")
 

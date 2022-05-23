@@ -123,3 +123,4 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 export LC_CTYPE="en_US.UTF-8"
 
+export PATH="/usr/local/opt/node@16/bin:$PATH"
