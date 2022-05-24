@@ -124,3 +124,9 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 export LC_CTYPE="en_US.UTF-8"
 
 export PATH="/usr/local/opt/node@16/bin:$PATH"
+JAVA_HOME=/Users/ndz/Documents/jdk18
+PATH=$JAVA_HOME/bin:$PATH
+CLASS_PATH=$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:.
+export JAVA_HOME
+export PATH
+export CLASS_PATH
