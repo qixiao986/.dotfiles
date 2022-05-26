@@ -149,9 +149,11 @@ local has_words_before = function()
 end
 
 local luasnip = require("luasnip")
+require("luasnip.loaders.from_vscode").lazy_load({paths = "~/.config/coc/ultisnips"})
+require("luasnip.loaders.from_lua").lazy_load({paths = "~/.config/coc/ultisnips"})
 require("luasnip.loaders.from_snipmate").lazy_load()
 require("luasnip.loaders.from_vscode").lazy_load()
-require("luasnip.loaders.from_vscode").lazy_load({paths = "~/.config/coc/ultisnips"})
+
 local cmp = require'cmp'
 cmp.setup({
   completion = {
@@ -194,14 +196,27 @@ cmp.setup({
       ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i', 'c'}),
       ['<C-n>'] = cmp.mapping({
           c = function()
-              if cmp.visible() then
+              if luasnip.choice_active() then
+                  luasnip.change_choice(1)
+              elseif cmp.visible() then
+                  cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              else
+                  vim.api.nvim_feedkeys(t('<Down>'), 'n', true)
+              end
+          end,
+          s = function()
+              if luasnip.choice_active() then
+                  luasnip.change_choice(1)
+              elseif cmp.visible() then
                   cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
               else
                   vim.api.nvim_feedkeys(t('<Down>'), 'n', true)
               end
           end,
           i = function(fallback)
-              if cmp.visible() then
+              if luasnip.choice_active() then
+                  luasnip.change_choice(1)
+              elseif cmp.visible() then
                   cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
               else
                   fallback()
@@ -210,14 +225,27 @@ cmp.setup({
       }),
       ['<C-p>'] = cmp.mapping({
           c = function()
-              if cmp.visible() then
+              if luasnip.choice_active() then
+                  luasnip.change_choice(-1)
+              elseif cmp.visible() then
+                  cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+              else
+                  vim.api.nvim_feedkeys(t('<Up>'), 'n', true)
+              end
+          end,
+          s = function()
+              if luasnip.choice_active() then
+                  luasnip.change_choice(-1)
+              elseif cmp.visible() then
                   cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
               else
                   vim.api.nvim_feedkeys(t('<Up>'), 'n', true)
               end
           end,
           i = function(fallback)
-              if cmp.visible() then
+              if luasnip.choice_active() then
+                  luasnip.change_choice(-1)
+              elseif cmp.visible() then
                   cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
               else
                   fallback()
@@ -240,8 +268,8 @@ cmp.setup({
   }),
 
   sources = {
-    { name = 'nvim_lsp' },
     { name = 'luasnip' }, -- For luasnip users.
+    { name = 'nvim_lsp' },
     { name = 'path'  },
     {name = 'buffer', keyword_length=5 },
     {name = 'calc'},

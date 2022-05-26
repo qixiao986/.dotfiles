@@ -436,7 +436,7 @@ local Snippets = {
     end,
     provider = function()
         local luasnip = require("luasnip")
-        local forward = luasnip.expand_or_jumpable() and "" or ""
+        local forward = luasnip.jumpable(1) and "" or ""
         local backward = luasnip.jumpable(-1) and " " or ""
         return backward .. forward
     end,
