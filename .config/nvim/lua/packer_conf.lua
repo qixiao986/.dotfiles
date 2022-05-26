@@ -95,9 +95,10 @@ packer.startup(function()
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use 'petertriho/cmp-git'
   use 'lukas-reineke/cmp-rg'
-  use 'sirver/ultisnips'
   use 'honza/vim-snippets'
-  use 'quangnguyen30192/cmp-nvim-ultisnips'
+  use 'rafamadriz/friendly-snippets'
+  use { 'L3MON4D3/LuaSnip' }
+  use { 'saadparwaiz1/cmp_luasnip' }
   use 'onsails/lspkind-nvim'
 
   use 'norcalli/nvim-colorizer.lua'

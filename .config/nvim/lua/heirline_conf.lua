@@ -435,8 +435,9 @@ local Snippets = {
         return vim.tbl_contains({'s', 'i'}, vim.fn.mode())
     end,
     provider = function()
-        local forward = (vim.fn["UltiSnips#CanJumpForwards"]() == 1) and "" or ""
-        local backward = (vim.fn["UltiSnips#CanJumpBackwards"]() == 1) and " " or ""
+        local luasnip = require("luasnip")
+        local forward = luasnip.expand_or_jumpable() and "" or ""
+        local backward = luasnip.jumpable(-1) and " " or ""
         return backward .. forward
     end,
     hl = { fg = "red", bold = true },
