@@ -123,7 +123,6 @@ local lsp_on_attach = function(client, bufnr)
   -- buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   -- buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<Leader>lq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  buf_set_keymap('n', '<Leader>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   buf_set_keymap("n", "<Leader>lr", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
   buf_set_keymap("n", "<Leader>lc", "<cmd>CodeActionMenu<cr>", {silent = true, noremap = true})
@@ -136,7 +135,7 @@ local lsp_on_attach = function(client, bufnr)
   buf_set_keymap("n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
 
 end
-
+vim.keymap.set('n', '<Leader>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 
 -- nvim-code-action-menu
 vim.g.code_action_menu_show_details = true
