@@ -49,4 +49,9 @@ vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
 vim.keymap.set('c', '<C-l>', '<right>')
 vim.keymap.set('c', '<C-h>', '<left>')
 
-
+-- reload config
+local reload_config = function()
+  vim.lsp.stop_client(vim.lsp.get_active_clients()) --without this lsp will muti attach
+  vim.cmd [[source ~/.config/nvim/init.lua]]
+end
+vim.keymap.set('n', '<leader>r', reload_config)

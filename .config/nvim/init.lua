@@ -149,10 +149,20 @@ local has_words_before = function()
 end
 
 local luasnip = require("luasnip")
-require("luasnip.loaders.from_vscode").lazy_load({paths = "~/.config/coc/ultisnips"})
+local types = require("luasnip.util.types")
 require("luasnip.loaders.from_lua").lazy_load({paths = "~/.config/coc/ultisnips"})
 require("luasnip.loaders.from_snipmate").lazy_load()
 require("luasnip.loaders.from_vscode").lazy_load()
+luasnip.config.setup{
+  update_events = "TextChanged,TextChangedI",
+  ext_opts = {
+    [types.choiceNode] = {
+      active = {
+        virt_text = { {"<--Choice Node", "Error"}},
+      }
+    }
+  }
+}
 
 local cmp = require'cmp'
 cmp.setup({
