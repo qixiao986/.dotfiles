@@ -643,3 +643,10 @@ require('numb').setup{}
 
 -- null-ls
 require("null-ls_conf")
+
+-- cinnamon
+require('cinnamon').setup{
+  extra_keymaps = true,
+  extended_keymaps = true,
+  override_keymaps = true,
+}
