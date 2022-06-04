@@ -162,6 +162,7 @@ luasnip.config.setup{
     }
   }
 }
+vim.keymap.set('i', '<C-s>', '<cmd>lua require("luasnip.extras.select_choice")()<cr>')
 
 local cmp = require'cmp'
 cmp.setup({

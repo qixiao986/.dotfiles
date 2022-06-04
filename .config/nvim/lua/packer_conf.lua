@@ -49,6 +49,7 @@ packer.startup(function()
   use { 'jedrzejboczar/possession.nvim' }
   use { 'jedrzejboczar/toggletasks.nvim' }
   use 'declancm/cinnamon.nvim'
+  use 'stevearc/dressing.nvim'
 
   -- editor plugins
   use 'numtostr/comment.nvim'
