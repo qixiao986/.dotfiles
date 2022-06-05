@@ -49,7 +49,7 @@ packer.startup(function()
   use { 'jedrzejboczar/possession.nvim' }
   use { 'jedrzejboczar/toggletasks.nvim' }
   use 'declancm/cinnamon.nvim'
-  use 'stevearc/dressing.nvim'
+  use { 'stevearc/dressing.nvim' }
 
   -- editor plugins
   use 'numtostr/comment.nvim'
@@ -84,6 +84,7 @@ packer.startup(function()
   use 'p00f/nvim-ts-rainbow'
   use { 'jose-elias-alvarez/null-ls.nvim', disable = false }
   use 'mfussenegger/nvim-jdtls'
+  use 'JoosepAlviste/nvim-ts-context-commentstring'
 
 
   -- cmp
