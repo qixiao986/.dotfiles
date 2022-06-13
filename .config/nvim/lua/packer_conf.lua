@@ -35,7 +35,7 @@ packer.startup(function()
 
   -- UI Plugins
   use { 'rebelot/heirline.nvim' }
-  use 'SmiteshP/nvim-gps'
+  use 'SmiteshP/nvim-navic'
   use 'altercation/vim-colors-solarized'
   use 'noib3/nvim-cokeline'
   use 'akinsho/toggleterm.nvim'

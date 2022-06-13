@@ -95,6 +95,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local lsp_on_attach = function(client, bufnr)
+  require('nvim-navic').attach(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -317,9 +318,10 @@ cmp.setup.cmdline(':', {
 
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.offsetEncoding = "utf-8"
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "clangd", "pyright" }
+local servers = { "clangd", "pyright", "gopls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = lsp_on_attach,
@@ -547,10 +549,8 @@ vim.keymap.set("n", "<leader>ct", "<cmd>CphTest<cr>")
 -- alpha dashboard
 require('alpha_conf')
 
--- nvim-gps
-local gps = require('nvim-gps')
-gps.setup{}
-
+-- nvim-navic
+require('nvim-navic').setup{}
 
 -- heirline
 require('heirline_conf')

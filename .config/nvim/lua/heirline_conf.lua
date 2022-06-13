@@ -271,10 +271,10 @@ local LSPMessages = {
 }
 
 -- Awesome plugin
-local Gps = {
-    condition = require("nvim-gps").is_available,
-    provider = require("nvim-gps").get_location,
-    hl = { fg = colors.green },
+-- Full nerd (with icon colors)!
+local Navic = {
+    condition = require("nvim-navic").is_available,
+    provider = require("nvim-navic").get_location,
 }
 
 local Diagnostics = {
@@ -443,7 +443,7 @@ local Snippets = {
     hl = { fg = "red", bold = true },
 }
 
-local Gps = utils.make_flexible_component(3, Gps, { provider = "" })
+local Navic = utils.make_flexible_component(3, Navic, { provider = "" })
 
 local Align = { provider = "%=" }
 local Space = { provider = " " }
@@ -453,7 +453,7 @@ ViMode = utils.surround({ "", "" }, colors.gray, { ViMode, Snippets })
 
 local DefaultStatusline = {
   ViMode, Space, FileNameBlock, Space, Git, Space, Diagnostics, Align,
-  Gps, Align,
+  Navic, Align,
   LSPActive, Space, FileType, Space, Ruler, Space, ScrollBar
 }
 
