@@ -50,6 +50,7 @@ packer.startup(function()
   use { 'jedrzejboczar/toggletasks.nvim' }
   use 'declancm/cinnamon.nvim'
   use { 'stevearc/dressing.nvim' }
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
   -- editor plugins
   use 'numtostr/comment.nvim'
