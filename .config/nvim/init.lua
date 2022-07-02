@@ -281,6 +281,7 @@ cmp.setup({
 
   sources = {
     { name = 'luasnip' }, -- For luasnip users.
+    { name = 'cmp_tabnine'},
     { name = 'nvim_lsp' },
     { name = 'path'  },
     {name = 'buffer', keyword_length=5 },
@@ -347,6 +348,7 @@ cmp.setup {
           buffer = "[Buffer]",
           nvim_lsp = "[LSP]",
           luasnip = "[LuaSnip]",
+          cmp_tabnine = "[TabNine]",
           nvim_lua = "[Lua]",
           latex_symbols = "[LaTeX]",
           path = "[Path]",
@@ -576,10 +578,10 @@ cmp.event:on(
 )
 
 -- copilot
-vim.g.copilot_no_tab_map = true
-vim.keymap.set("i", "<C-o>", 'copilot#Accept("<CR>")', {expr = true})
-vim.keymap.set('i', '‘', '<Plug>(copilot-next)') -- alt-]
-vim.keymap.set('i', '“', '<Plug>(copilot-previous)') --alt-[
+-- vim.g.copilot_no_tab_map = true
+-- vim.keymap.set("i", "<C-o>", 'copilot#Accept("<CR>")', {expr = true})
+-- vim.keymap.set('i', '‘', '<Plug>(copilot-next)') -- alt-]
+-- vim.keymap.set('i', '“', '<Plug>(copilot-previous)') --alt-[
 
 --which key
 require("which-key").setup {}
@@ -677,3 +679,21 @@ require('dressing').setup{}
 
 -- nvim-ufo
 require('fold_conf')
+
+-- tabnine
+local tabnine = require('cmp_tabnine.config')
+tabnine:setup({
+	max_lines = 1000;
+	max_num_results = 20;
+	sort = true;
+	run_on_every_keystroke = true;
+	snippet_placeholder = '..';
+	ignored_file_types = { -- default is not to ignore
+		-- uncomment to ignore in lua:
+		-- lua = true
+	};
+	show_prediction_strength = false;
+})
+
+-- nvim-surround
+require('nvim-surround').setup{}

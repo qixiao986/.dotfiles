@@ -12,6 +12,7 @@ vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.linebreak = true
+vim.opt.wrap = true
 vim.opt.sidescrolloff = 5
 vim.opt.ruler = true
 vim.opt.showcmd = true

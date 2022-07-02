@@ -56,7 +56,7 @@ packer.startup(function()
   use 'numtostr/comment.nvim'
   use 'editorconfig/editorconfig-vim'
   use 'windwp/nvim-autopairs'
-  use 'tpope/vim-surround'
+  use 'kylechui/nvim-surround'
   use 'lewis6991/gitsigns.nvim'
   use { 'chentoast/marks.nvim', lock = true }
   use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
@@ -66,7 +66,7 @@ packer.startup(function()
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use { 'michaelb/sniprun', run = 'bash ./install.sh' }
   use 'windwp/nvim-spectre'
-  use 'github/copilot.vim'
+  -- use { 'github/copilot.vim', disable = true }
   use { 'mizlan/iswap.nvim' }
 
   -- lsp plugins
@@ -97,6 +97,7 @@ packer.startup(function()
   use 'hrsh7th/cmp-calc'
   use 'hrsh7th/cmp-nvim-lua'
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
+  use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
   use 'petertriho/cmp-git'
   use 'lukas-reineke/cmp-rg'
   use 'honza/vim-snippets'
