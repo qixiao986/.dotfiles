@@ -284,6 +284,7 @@ cmp.setup({
     { name = 'cmp_tabnine'},
     { name = 'nvim_lsp' },
     { name = 'path'  },
+    { name = 'dictionary', keyword_length=2 },
     {name = 'buffer', keyword_length=5 },
     {name = 'calc'},
     -- {name = 'rg'},
@@ -349,6 +350,7 @@ cmp.setup {
           nvim_lsp = "[LSP]",
           luasnip = "[LuaSnip]",
           cmp_tabnine = "[TabNine]",
+          dictionary = "[dictionary]",
           nvim_lua = "[Lua]",
           latex_symbols = "[LaTeX]",
           path = "[Path]",
@@ -356,6 +358,16 @@ cmp.setup {
         return vim_item
       end
     })
+  },
+}
+
+-- cmp_dictionary
+require("cmp_dictionary").setup{
+  dic = {
+    ["*"] = {
+      "/usr/share/dict/words", 
+      -- os.getenv("HOME") .. "/Documents/words.txt"
+    },
   },
 }
 

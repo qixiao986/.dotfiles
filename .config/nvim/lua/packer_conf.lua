@@ -105,10 +105,14 @@ packer.startup(function()
   use { 'L3MON4D3/LuaSnip' }
   use { 'saadparwaiz1/cmp_luasnip' }
   use 'onsails/lspkind-nvim'
+  use 'uga-rosa/cmp-dictionary'
 
   use 'norcalli/nvim-colorizer.lua'
   use 'connorholyday/vim-snazzy'
   use 'folke/which-key.nvim'
+  use { 'anuvyklack/hydra.nvim',
+    requires = 'anuvyklack/keymap-layer.nvim' -- needed only for pink hydras
+  }
 
   -- language specific
   use {"ellisonleao/glow.nvim", branch = 'main'} --markdown preview

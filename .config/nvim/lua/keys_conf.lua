@@ -1,4 +1,5 @@
 require('utils_conf')
+require('hydra_conf')
 
 vim.g.mapleader = t'<Space>'
 vim.g.maplocalleader = t'<Space>'
@@ -19,12 +20,6 @@ vim.keymap.set('n', 'Zz', '<cmd>q<CR>')
 vim.keymap.set('n', '<C-c>', '<cmd>nohl<CR><C-L>')
 vim.keymap.set('n', '<S-l>', '<cmd>bn<CR>')
 vim.keymap.set('n', '<S-h>', '<cmd>bp<CR>')
-vim.keymap.set('n', '<C-\\>', '<cmd>vsp<CR>')
-vim.keymap.set('n', '<C-_>', '<cmd>sp<CR>')
-vim.keymap.set('n', '<C-h>', '<C-w>h')
-vim.keymap.set('n', '<C-j>', '<C-w>j')
-vim.keymap.set('n', '<C-k>', '<C-w>k')
-vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', '<leader>q', '<cmd>bd!<CR>')
 vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
 vim.keymap.set('n', 'cp', '<cmd>let @+ = expand("%:p")<CR>')
