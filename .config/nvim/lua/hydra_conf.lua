@@ -3,7 +3,7 @@ local Hydra = require("hydra")
 Hydra({
 	name = "Change / Resize Window",
 	mode = { "n" },
-	body = "<C-w>",
+	body = "<c-w>",
   hint = [[
      _h_: left   _l_: right        _j_: down   _k_: up
      _H_: increase left   _L_: increase right   _J_: increase down   _K_: increase up
@@ -12,7 +12,6 @@ Hydra({
      ^ ^                         _<Esc>_: exit
   ]],
   config = {
-    invoke_on_body = true,
     hint = {
        position = 'bottom',
        border = 'rounded'

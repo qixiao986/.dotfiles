@@ -74,7 +74,7 @@ packer.startup(function()
   use 'kosayoda/nvim-lightbulb'
   use 'weilbith/nvim-code-action-menu'
   use 'nvim-lua/lsp-status.nvim'
-  use 'tami5/lspsaga.nvim'
+  use 'kkharji/lspsaga.nvim'
   use 'simrat39/symbols-outline.nvim'
   use 'folke/trouble.nvim'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -86,7 +86,9 @@ packer.startup(function()
   use { 'jose-elias-alvarez/null-ls.nvim', disable = false }
   use 'mfussenegger/nvim-jdtls'
   use 'JoosepAlviste/nvim-ts-context-commentstring'
-
+  use({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  })
 
   -- cmp
   use 'hrsh7th/nvim-cmp'
