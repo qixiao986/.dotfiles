@@ -269,8 +269,8 @@ cmp.setup({
 
   sources = {
     { name = 'luasnip' }, -- For luasnip users.
-    { name = 'cmp_tabnine'},
     { name = 'nvim_lsp' },
+    -- { name = 'cmp_tabnine'},
     { name = 'path'  },
     { name = 'dictionary', keyword_length=2 },
     {name = 'buffer', keyword_length=5 },
@@ -337,7 +337,7 @@ cmp.setup {
           buffer = "[Buffer]",
           nvim_lsp = "[LSP]",
           luasnip = "[LuaSnip]",
-          cmp_tabnine = "[TabNine]",
+          --[[ cmp_tabnine = "[TabNine]", ]]
           dictionary = "[dictionary]",
           nvim_lua = "[Lua]",
           latex_symbols = "[LaTeX]",
@@ -403,6 +403,11 @@ require("neo-tree").setup{
       symbols = {
         unstaged  = "ﱵ",
       }
+    },
+  },
+  filesystem = {
+    filtered_items = {
+      hide_dotfiles = false,
     },
   },
 }
@@ -679,21 +684,6 @@ require('dressing').setup{}
 
 -- nvim-ufo
 require('fold_conf')
-
--- tabnine
-local tabnine = require('cmp_tabnine.config')
-tabnine:setup({
-	max_lines = 1000;
-	max_num_results = 20;
-	sort = true;
-	run_on_every_keystroke = true;
-	snippet_placeholder = '..';
-	ignored_file_types = { -- default is not to ignore
-		-- uncomment to ignore in lua:
-		-- lua = true
-	};
-	show_prediction_strength = false;
-})
 
 -- nvim-surround
 require('nvim-surround').setup{}

@@ -99,7 +99,6 @@ packer.startup(function()
   use 'hrsh7th/cmp-calc'
   use 'hrsh7th/cmp-nvim-lua'
   use 'hrsh7th/cmp-nvim-lsp-signature-help'
-  use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
   use 'petertriho/cmp-git'
   use 'lukas-reineke/cmp-rg'
   use 'honza/vim-snippets'
