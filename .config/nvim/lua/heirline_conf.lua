@@ -504,7 +504,7 @@ local StatusLines = {
         end
     end,
 
-    init = utils.pick_child_on_condition,
+    fallthrough = false,
 
     SpecialStatusline, TerminalStatusline, InactiveStatusline, DefaultStatusline,
 }
