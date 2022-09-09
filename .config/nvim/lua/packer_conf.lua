@@ -32,6 +32,7 @@ packer.startup(function()
   }
   use 'ggandor/leap.nvim'
   use { 'nacro90/numb.nvim' }
+  use 'kevinhwang91/rnvimr'
 
   -- UI Plugins
   use { 'rebelot/heirline.nvim' }

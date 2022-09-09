@@ -694,3 +694,7 @@ vim.diagnostic.config({
   virtual_text = false,
   virtual_lines = true,
 })
+
+-- rnvimr
+vim.keymap.set("n", "<leader>v", "<cmd>RnvimrToggle<cr>")
+vim.keymap.set("t", "<leader>v", "<C-\\><C-n>:RnvimrToggle<cr>")
