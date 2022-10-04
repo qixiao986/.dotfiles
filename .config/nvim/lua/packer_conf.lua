@@ -75,7 +75,7 @@ packer.startup(function()
   use 'kosayoda/nvim-lightbulb'
   use 'weilbith/nvim-code-action-menu'
   use 'nvim-lua/lsp-status.nvim'
-  use 'kkharji/lspsaga.nvim'
+  use {'glepnir/lspsaga.nvim', branch = 'main'}
   use 'simrat39/symbols-outline.nvim'
   use 'folke/trouble.nvim'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }

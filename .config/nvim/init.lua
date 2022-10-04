@@ -77,8 +77,29 @@ require'treesitter-context'.setup{}
 
 -- LSP
 local nvim_lsp = require('lspconfig')
+
 -- lspsaga
-require 'lspsaga'.setup {}
+require 'lspsaga'.init_lsp_saga {}
+local signs = {
+  Error = ' ',
+  Warn = ' ',
+  Info = ' ',
+  Hint = 'ﴞ ',
+}
+for type, icon in pairs(signs) do
+  local hl = 'DiagnosticSign' .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+vim.diagnostic.config({
+  signs = true,
+  update_in_insert = false,
+  underline = true,
+  severity_sort = true,
+  virtual_text = {
+    source = true,
+  },
+})
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -563,8 +584,6 @@ require('alpha_conf')
 -- nvim-navic
 require('nvim-navic').setup{}
 
--- heirline
-require('heirline_conf')
 
 -- nvim-autoapirs
 local npairs = require('nvim-autopairs')
@@ -698,3 +717,6 @@ vim.diagnostic.config({
 -- rnvimr
 vim.keymap.set("n", "<leader>v", "<cmd>RnvimrToggle<cr>")
 vim.keymap.set("t", "<leader>v", "<C-\\><C-n>:RnvimrToggle<cr>")
+
+-- heirline
+require('heirline_conf')
