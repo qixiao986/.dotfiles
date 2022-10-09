@@ -1,3 +1,29 @@
+vim.opt.packpath = {'/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site','/usr/share/nvim/runtime','/lib/nvim','/usr/share/nvim/site/after','/usr/local/share/nvim/site/after','/etc/xdg/nvim/after'}
+vim.opt.runtimepath = {'/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site','/usr/share/nvim/runtime','/lib/nvim','/usr/share/nvim/site/after','/usr/local/share/nvim/site/after','/etc/xdg/nvim/after'}
+local root_path = vim.fn.expand('~/nvim_vscode_config')
+vim.opt.runtimepath:append(root_path)
+vim.opt.packpath:append(root_path .. '/packer')
+
+local packer = require('packer')
+packer.reset()
+packer.init({
+  display = {
+    open_fn = require'packer.util'.float
+  },
+  package_root = root_path,
+  compile_path = root_path .. "/lua/packer_compiled.lua"
+})
+
+packer.startup(function()
+  use 'wbthomason/packer.nvim'
+
+  use 'ggandor/leap.nvim'
+  use 'kevinhwang91/nvim-hlslens'
+  -- editor plugins
+  use 'numtostr/comment.nvim'
+  use 'kylechui/nvim-surround'
+end)
+
 function t(str)
     -- Adjust boolean arguments as needed
     return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -93,3 +119,4 @@ vim.keymap.set('v', '<C-k>', ':m\'<-2<cr>`>my`<mzgv`yo`z')
 vim.keymap.set('v', '*', function() VisualSelection('f') end)
 vim.keymap.set('v', '#', function() VisualSelection('b') end)
 vim.keymap.set('v', 'R', function() VisualSelection('r') end)
+
