@@ -494,7 +494,7 @@ local DefaultStatusline = {
 	Space,
 	Diagnostics,
 	Align,
-	Navic,
+	--[[ Navic, ]]
 	Align,
 	LSPActive,
 	Space,
@@ -570,4 +570,4 @@ local StatusLines = {
 	DefaultStatusline,
 }
 
-require("heirline").setup(StatusLines)
+require("heirline").setup({ statusline = StatusLines })
