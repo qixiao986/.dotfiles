@@ -111,15 +111,17 @@ local FileName = {
 	end,
 	hl = { fg = utils.get_highlight("Directory").fg },
 
-	utils.make_flexible_component(2, {
+  {
 		provider = function(self)
 			return self.lfilename
 		end,
-	}, {
+	}, 
+  {
 		provider = function(self)
 			return vim.fn.pathshorten(self.lfilename)
 		end,
-	}),
+  },
+  flexible = 2,
 }
 
 local FileNameBlock = {
@@ -430,23 +432,26 @@ local WorkDir = {
 	end,
 	hl = { fg = colors.blue, bold = true },
 
-	utils.make_flexible_component(1, {
+  {
 		-- evaluates to the full-lenth path
 		provider = function(self)
 			local trail = self.cwd:sub(-1) == "/" and "" or "/"
 			return self.icon .. self.cwd .. trail .. " "
 		end,
-	}, {
+	},
+  {
 		-- evaluates to the shortened path
 		provider = function(self)
 			local cwd = vim.fn.pathshorten(self.cwd)
 			local trail = self.cwd:sub(-1) == "/" and "" or "/"
 			return self.icon .. cwd .. trail .. " "
 		end,
-	}, {
+	},
+  {
 		-- evaluates to "", hiding the component
 		provider = "",
-	}),
+	},
+  flexible = 1,
 }
 
 local TerminalName = {
@@ -473,7 +478,7 @@ local Snippets = {
 	hl = { fg = "red", bold = true },
 }
 
-local Navic = utils.make_flexible_component(3, Navic, { provider = "" })
+local Navic = {flexible = 3, { provider = "" }}
 
 local Align = { provider = "%=" }
 local Space = { provider = " " }
