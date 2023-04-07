@@ -1,0 +1,8 @@
+
+add_newline = false
+
+[time]
+disabled = false
+time_format = "%Y-%m-%d %T" # Hour:Minute Format
+style = "bg:#33658A"
+format = '[[ 🤍 $time ](bg:#33658A)]($style)'
