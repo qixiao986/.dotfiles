@@ -49,7 +49,7 @@ vim.opt.errorformat:prepend('%-GIn file included %.%#')
 vim.opt.guifont = "JetBrainsMono Nerd Font:h12"
 --gui don't need set lang, terminal nvim need set lang to make the copy right
 if vim.fn.has('gui_vimr') == 0 then
-  vim.cmd [[language en_US]]
+ -- vim.cmd [[language en_US]]
 end
 vim.cmd [[colo snazzy]]
 -- vim.cmd [[colo desert]]
@@ -73,4 +73,17 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_autocmd({"BufEnter","FocusGained","InsertLeave"}, { command = "set relativenumber" })
 vim.api.nvim_create_autocmd({"BufLeave","FocusLost","InsertEnter"}, { command = "set norelativenumber" })
 vim.api.nvim_create_autocmd("CursorHold", { callback = CursorHoldWriteFile })
-
+vim.cmd[[
+let g:clipboard = {
+  \   'name': 'WslClipboard',
+  \   'copy': {
+  \      '+': 'clip.exe',
+  \      '*': 'clip.exe',
+  \    },
+  \   'paste': {
+  \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  \   },
+  \   'cache_enabled': 0,
+  \ }
+  ]]

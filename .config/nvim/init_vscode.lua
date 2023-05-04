@@ -1,5 +1,5 @@
-vim.opt.packpath = {'/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site','/usr/share/nvim/runtime','/lib/nvim','/usr/share/nvim/site/after','/usr/local/share/nvim/site/after','/etc/xdg/nvim/after'}
-vim.opt.runtimepath = {'/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site','/usr/share/nvim/runtime','/lib/nvim','/usr/share/nvim/site/after','/usr/local/share/nvim/site/after','/etc/xdg/nvim/after'}
+vim.opt.packpath = {'/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site','/home/qixiao/squashfs-root/usr/share/nvim/runtime','/home/qixiao/squashfs-root/usr/lib/nvim','/usr/share/nvim/site/after','/usr/local/share/nvim/site/after','/etc/xdg/nvim/after'}
+vim.opt.runtimepath = {'/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site','/home/qixiao/squashfs-root/usr/share/nvim/runtime','/home/qixiao/squashfs-root/usr/share/nvim/runtime/pack/dist/opt/matchit','/home/qixiao/squashfs-root/usr/lib/nvim','/usr/share/nvim/site/after','/usr/local/share/nvim/site/after','/etc/xdg/nvim/after'}
 local root_path = vim.fn.expand('~/nvim_vscode_config')
 vim.opt.runtimepath:append(root_path)
 vim.opt.packpath:append(root_path .. '/packer')
