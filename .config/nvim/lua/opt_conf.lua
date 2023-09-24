@@ -73,17 +73,19 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_autocmd({"BufEnter","FocusGained","InsertLeave"}, { command = "set relativenumber" })
 vim.api.nvim_create_autocmd({"BufLeave","FocusLost","InsertEnter"}, { command = "set norelativenumber" })
 vim.api.nvim_create_autocmd("CursorHold", { callback = CursorHoldWriteFile })
-vim.cmd[[
-let g:clipboard = {
-  \   'name': 'WslClipboard',
-  \   'copy': {
-  \      '+': 'clip.exe',
-  \      '*': 'clip.exe',
-  \    },
-  \   'paste': {
-  \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  \   },
-  \   'cache_enabled': 0,
-  \ }
-  ]]
+if vim.fn.has('win32') == 1 then
+  vim.cmd[[
+  let g:clipboard = {
+    \   'name': 'WslClipboard',
+    \   'copy': {
+    \      '+': 'clip.exe',
+    \      '*': 'clip.exe',
+    \    },
+    \   'paste': {
+    \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    \   },
+    \   'cache_enabled': 0,
+    \ }
+    ]]
+end

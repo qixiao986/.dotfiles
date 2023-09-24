@@ -514,6 +514,17 @@ local HelpFileName = {
 	hl = { fg = colors.blue },
 }
 
+local PluginStatus = {
+  -- condition = require("lazy.status").has_updates,
+  provider = function()
+    local Checker = require("lazy.manage.checker")
+    local updates = #Checker.updated
+    return updates
+  end,
+  hl = { fg = colors.red },
+}
+
+
 local WorkDir = {
 	provider = function(self)
 		self.icon = (vim.fn.haslocaldir(0) == 1 and "l" or "g") .. " " .. " "
@@ -584,6 +595,8 @@ local DefaultStatusline = {
 	Align,
 	Navic,
 	Align,
+  PluginStatus,
+  Space,
 	LSPActive,
 	Space,
 	FileType,

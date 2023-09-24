@@ -136,5 +136,13 @@ require('lazy').setup({
     {"ellisonleao/glow.nvim", branch = 'main'}, --markdown preview,
   -- this one dont need update for now
     { 'p00f/cphelper.nvim', pin = true },
-})
+  }, 
+  -- opts
+  {
+    checker = {
+      enabled = true,
+      frequency = 60,
+    }
+  }
+)
 
