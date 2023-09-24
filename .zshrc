@@ -74,6 +74,8 @@ export VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 export VI_MODE_SET_CURSOR=true
 export VISUAL=nvim
 source $ZSH/oh-my-zsh.sh
+autoload edit-command-line; zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
 
 # User configuration
 

@@ -1,5 +1,5 @@
 require('utils_conf')
-require('packer_conf')
+require('lazy_conf')
 require('opt_conf')
 require('keys_conf')
 
@@ -79,7 +79,7 @@ require'treesitter-context'.setup{}
 local nvim_lsp = require('lspconfig')
 
 -- lspsaga
-require 'lspsaga'.init_lsp_saga {}
+require 'lspsaga'.setup {}
 local signs = {
   Error = ' ',
   Warn = ' ',
@@ -161,8 +161,8 @@ end
 local luasnip = require("luasnip")
 local types = require("luasnip.util.types")
 require("luasnip.loaders.from_lua").lazy_load({paths = "~/.config/coc/ultisnips"})
-require("luasnip.loaders.from_snipmate").lazy_load()
-require("luasnip.loaders.from_vscode").lazy_load()
+-- require("luasnip.loaders.from_snipmate").lazy_load()
+-- require("luasnip.loaders.from_vscode").lazy_load({paths = "~/.config/coc/ultisnips"})
 luasnip.config.setup{
   update_events = "TextChanged,TextChangedI",
   ext_opts = {
@@ -436,38 +436,24 @@ vim.keymap.set('n', '<leader>t', '<cmd>Neotree reveal toggle<CR>')
 
 -- comment
 require('Comment').setup {
-  pre_hook = function(ctx)
-    local U = require 'Comment.utils'
-
-    local location = nil
-    if ctx.ctype == U.ctype.block then
-      location = require('ts_context_commentstring.utils').get_cursor_location()
-    elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-      location = require('ts_context_commentstring.utils').get_visual_start_location()
-    end
-
-    return require('ts_context_commentstring.internal').calculate_commentstring {
-      key = ctx.ctype == U.ctype.line and '__default' or '__multiline',
-      location = location,
-    }
-  end,
+  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 }
 
 -- sniprun
-require('sniprun').setup {
-	interpreter_options = {
-        Cpp_original = {
-            compiler = "g++-12"
-            }
-        },
-  --# you can combo different display modes as desired
-  display = {
-    "TempFloatingWindow",      --# display results in a floating window
-  },
-}
-vim.keymap.set('v', '<F5>', '<Plug>SnipRun')
-vim.keymap.set('n', '<F6>', '<Plug>SnipRunOperator')
-vim.keymap.set('n', '<F5>', '<Plug>SnipRun')
+-- require('sniprun').setup {
+-- 	interpreter_options = {
+--         Cpp_original = {
+--             compiler = "g++-13"
+--             }
+--         },
+--   --# you can combo different display modes as desired
+--   display = {
+--     "TempFloatingWindow",      --# display results in a floating window
+--   },
+-- }
+-- vim.keymap.set('v', '<F5>', '<Plug>SnipRun')
+-- vim.keymap.set('n', '<F6>', '<Plug>SnipRunOperator')
+-- vim.keymap.set('n', '<F5>', '<Plug>SnipRun')
 
 -- nvim-cokeline
 require('cokeline_conf')
@@ -504,7 +490,7 @@ local gccomplie = Terminal:new({
 })
 function _gccomplie_toggle()
   vim.cmd[[w]]
-  vim.cmd[[3TermExec cmd="g++-12 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL %:r.cpp -o %:r"]]
+  vim.cmd[[3TermExec cmd="g++-13 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion  -DLOCAL %:r.cpp -o %:r"]]
 end
 
 function _gccrun_toggle()
@@ -573,8 +559,8 @@ require'colorizer'.setup{}
 vim.api.nvim_create_autocmd({"BufEnter"}, { command = "ColorizerAttachToBuffer" })
 
 -- cphelper
-vim.g.cphdir = t'/Users/ndz/Documents/code/github/algo/contests'
-vim.g.cpp_compile_command = 'g++-12 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion -fsanitize=address -fsanitize=undefined -DLOCAL solution.cpp -o cpp.out'
+vim.g['cph#dir'] = t'/Users/ndz/Documents/code/github/algo/contests'
+vim.g['cpp#compile_command'] = 'g++ -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion  -DLOCAL solution.cpp -o cpp.out'
 vim.keymap.set("n", "<leader>cr", "<cmd>CphReceive<cr>")
 vim.keymap.set("n", "<leader>ct", "<cmd>CphTest<cr>")
 
@@ -615,7 +601,7 @@ require("indent_blankline").setup {}
 vim.g.indent_blankline_filetype_exclude = vim.list_extend(vim.g.indent_blankline_filetype_exclude,{"alpha", "neo-tree"})
 
 -- marks
-require('marks').setup{}
+-- require('marks').setup{}
 
 -- trouble
 require('trouble').setup{}
@@ -644,7 +630,7 @@ vim.g.symbols_outline = {
 }
 
 -- focus
-require('focus').setup{}
+require('focus').setup{enable = false}
 
 -- zen-mode
 require('zen-mode').setup{}
@@ -720,3 +706,23 @@ vim.keymap.set("t", "<leader>v", "<C-\\><C-n>:RnvimrToggle<cr>")
 
 -- heirline
 require('heirline_conf')
+
+-- noice
+require("noice").setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true,
+    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false, -- add a border to hover docs and signature help
+  },
+})

@@ -12,7 +12,7 @@ end
 dashboard.section.buttons.val = {
   dashboard.button( "e", "  > New file" , "<cmd>ene <CR>"),
   dashboard.button( "c", "  > Competitive", "<cmd>lua _cd_cpdir()<CR>"),
-  dashboard.button( "u", "  > Update"   , "<cmd>PackerSync<CR>"),
+  dashboard.button( "u", "  > Update"   , "<cmd>:Lazy update<CR>"),
   dashboard.button( "f", "  > Find Files" , "<cmd>Telescope find_files<cr>"),
   dashboard.button( "d", "﯊  > Del RedoFile", "<cmd>lua _del_redofile()<CR>"),
 }
@@ -27,7 +27,7 @@ dashboard.section.header.val =
 }
 
 local function footer()
-  local plugins = #vim.tbl_keys(packer_plugins) --get packer_plugins plugins
+  local plugins = require("lazy").stats().count --get packer_plugins plugins
   local v = vim.version()
   local datetime = os.date " %Y-%m-%d   %H:%M:%S"
   return string.format(" %d   v%d.%d.%d  %s", plugins, v.major, v.minor, v.patch, datetime)
