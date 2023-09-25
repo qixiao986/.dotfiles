@@ -522,16 +522,32 @@ local PluginStatus = {
   hl = { fg = colors.red },
 }
 
-local MarcoStatus = {
+local MacroStatus = {
   condition = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
   provider = function()
-    local mode = require("noice").api.statusline.mode.get()
+    local mode = require("noice").api.status.mode.get()
     if mode then
       return string.match(mode, "^recording @.*") or ""
     end
     return ""
   end,
   hl = {fg = colors.purple},
+}
+
+local CmdStatus = {
+  condition = function()
+    return vim.o.cmdheight == 0
+  end,
+  provider = "%3.5(%S%)",
+  hl = {fg = colors.blue},
+}
+
+local MsgStatus = {
+  condition = function() return package.loaded["noice"] and require("noice").api.status.message.has() end,
+  provider = function()
+    return require("noice").api.status.message.get()
+  end,
+  hl = {fg = colors.orange},
 }
 
 local WorkDir = {
@@ -604,7 +620,9 @@ local DefaultStatusline = {
 	Align,
 	Navic,
 	Align,
-  MarcoStatus,
+  CmdStatus,
+  Space,
+  MacroStatus,
   Space,
   PluginStatus,
   Space,
@@ -626,6 +644,10 @@ local InactiveStatusline = {
 	Space,
 	FileNameBlock,
 	Align,
+  CmdStatus,
+  Space,
+  MacroStatus,
+  Space,
 }
 
 local SpecialStatusline = {
@@ -640,6 +662,10 @@ local SpecialStatusline = {
 	Space,
 	HelpFileName,
 	Align,
+  CmdStatus,
+  Space,
+  MacroStatus,
+  Space,
 }
 
 local TerminalStatusline = {
@@ -656,6 +682,10 @@ local TerminalStatusline = {
 	Space,
 	TerminalName,
 	Align,
+  CmdStatus,
+  Space,
+  MacroStatus,
+  Space,
 }
 
 local StatusLines = {

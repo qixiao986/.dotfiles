@@ -16,6 +16,7 @@ vim.opt.wrap = true
 vim.opt.sidescrolloff = 5
 vim.opt.ruler = true
 vim.opt.showcmd = true
+vim.opt.showcmdloc = 'statusline'
 vim.opt.showmode = false
 vim.opt.cmdheight = 2
 vim.opt.title = true
