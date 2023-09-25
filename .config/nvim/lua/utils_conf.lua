@@ -35,3 +35,8 @@ function CursorHoldWriteFile()
   end
 end
 
+function ClearNoiceAndHL()
+  require("notify").dismiss({ silent = true, pending = true })
+  vim.cmd("nohl")
+  vim.fn.feedkeys("<C-L><CR>")
+end
