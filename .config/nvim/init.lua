@@ -6,7 +6,7 @@ require('keys_conf')
 -- Treesitter
 local treesitter = require('nvim-treesitter.configs')
 treesitter.setup {
-  ensure_installed = {'c', 'cpp', 'java', 'python', 'markdown', 'bash', 'lua', 'javascript', 'html', 'css', 'vim'},
+  ensure_installed = {'c', 'cpp','regex','markdown_inline', 'java', 'python', 'markdown', 'bash', 'lua', 'javascript', 'html', 'css', 'vim'},
   highlight = { enable = true },
   indent = { enable = true },
   rainbow = { enable = true, extended_mode = true, },

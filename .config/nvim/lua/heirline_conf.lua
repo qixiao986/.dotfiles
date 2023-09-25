@@ -522,6 +522,17 @@ local PluginStatus = {
   hl = { fg = colors.red },
 }
 
+local MarcoStatus = {
+  condition = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+  provider = function()
+    local mode = require("noice").api.statusline.mode.get()
+    if mode then
+      return string.match(mode, "^recording @.*") or ""
+    end
+    return ""
+  end,
+  hl = {fg = colors.purple},
+}
 
 local WorkDir = {
 	provider = function(self)
@@ -593,6 +604,8 @@ local DefaultStatusline = {
 	Align,
 	Navic,
 	Align,
+  MarcoStatus,
+  Space,
   PluginStatus,
   Space,
 	LSPActive,
