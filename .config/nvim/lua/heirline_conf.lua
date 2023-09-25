@@ -515,11 +515,9 @@ local HelpFileName = {
 }
 
 local PluginStatus = {
-  -- condition = require("lazy.status").has_updates,
+  condition = require("lazy.status").has_updates,
   provider = function()
-    local Checker = require("lazy.manage.checker")
-    local updates = #Checker.updated
-    return updates
+    return require("lazy.status").updates()
   end,
   hl = { fg = colors.red },
 }
