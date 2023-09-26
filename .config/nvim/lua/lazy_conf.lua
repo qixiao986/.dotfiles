@@ -49,6 +49,25 @@ require('lazy').setup({
       "folke/noice.nvim",
       event = "VeryLazy",
       opts = {
+        views = {
+          split = {
+            size = "40%",
+          },
+          messages = {
+            view = "vsplit",
+            enter = true,
+          },
+        },
+        routes = {
+          {
+            filter = {
+              event = "msg_show",
+              kind = "",
+              find = "written",
+            },
+            opts = { skip = true },
+          },
+        },
         -- add any options here
       },
       dependencies = {

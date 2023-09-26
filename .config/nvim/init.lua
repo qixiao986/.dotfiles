@@ -560,7 +560,7 @@ vim.api.nvim_create_autocmd({"BufEnter"}, { command = "ColorizerAttachToBuffer" 
 
 -- cphelper
 vim.g['cph#dir'] = t'/Users/ndz/Documents/code/github/algo/contests'
-vim.g['cpp#compile_command'] = 'g++ -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion  -DLOCAL solution.cpp -o cpp.out'
+vim.g['cph#cpp#compile_command'] = 'g++-13 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion  -DLOCAL solution.cpp -o cpp.out'
 vim.keymap.set("n", "<leader>cr", "<cmd>CphReceive<cr>")
 vim.keymap.set("n", "<leader>ct", "<cmd>CphTest<cr>")
 
@@ -707,22 +707,3 @@ vim.keymap.set("t", "<leader>v", "<C-\\><C-n>:RnvimrToggle<cr>")
 -- heirline
 require('heirline_conf')
 
--- noice
-require("noice").setup({
-  lsp = {
-    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-    override = {
-      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-      ["vim.lsp.util.stylize_markdown"] = true,
-      ["cmp.entry.get_documentation"] = true,
-    },
-  },
-  -- you can enable a preset for easier configuration
-  presets = {
-    bottom_search = true, -- use a classic bottom cmdline for search
-    command_palette = true, -- position the cmdline and popupmenu together
-    long_message_to_split = true, -- long messages will be sent to a split
-    inc_rename = false, -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = false, -- add a border to hover docs and signature help
-  },
-})

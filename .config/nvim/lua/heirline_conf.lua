@@ -648,6 +648,8 @@ local InactiveStatusline = {
   Space,
   MacroStatus,
   Space,
+  PluginStatus,
+  Space,
 }
 
 local SpecialStatusline = {
@@ -665,6 +667,8 @@ local SpecialStatusline = {
   CmdStatus,
   Space,
   MacroStatus,
+  Space,
+  PluginStatus,
   Space,
 }
 
