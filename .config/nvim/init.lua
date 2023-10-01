@@ -418,21 +418,21 @@ require('telescope').load_extension('fzf')
 
 -- neo-tree
 vim.g.neo_tree_remove_legacy_commands = 1
-require("neo-tree").setup{
-  default_component_configs = {
-    git_status = {
-      symbols = {
-        unstaged  = "ﱵ",
-      }
-    },
-  },
-  filesystem = {
-    filtered_items = {
-      hide_dotfiles = false,
-    },
-  },
-}
-vim.keymap.set('n', '<leader>t', '<cmd>Neotree reveal toggle<CR>')
+-- require("neo-tree").setup{
+--   default_component_configs = {
+--     git_status = {
+--       symbols = {
+--         unstaged  = "ﱵ",
+--       }
+--     },
+--   },
+--   filesystem = {
+--     filtered_items = {
+--       hide_dotfiles = false,
+--     },
+--   },
+-- }
+-- vim.keymap.set('n', '<leader>t', '<cmd>Neotree reveal toggle<CR>')
 
 -- comment
 require('Comment').setup {
@@ -558,11 +558,16 @@ require("scrollbar").setup{
 require'colorizer'.setup{}
 vim.api.nvim_create_autocmd({"BufEnter"}, { command = "ColorizerAttachToBuffer" })
 
--- cphelper
-vim.g['cph#dir'] = t'/Users/ndz/Documents/code/github/algo/contests'
-vim.g['cph#cpp#compile_command'] = 'g++-13 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion  -DLOCAL solution.cpp -o cpp.out'
-vim.keymap.set("n", "<leader>cr", "<cmd>CphReceive<cr>")
-vim.keymap.set("n", "<leader>ct", "<cmd>CphTest<cr>")
+-- commpetitest
+require('competitest').setup {
+  received_problems_path = "$(HOME)/Documents/code/github/algo/contests/$(JUDGE)/$(CONTEST)/$(PROBLEM).$(FEXT)",
+  received_contests_directory = "$(HOME)/Documents/code/github/algo/contests/$(JUDGE)/$(CONTEST)",
+  compile_command = {
+    cpp = { exec = "g++-13", args = { "-std=c++17", "-O2","-Wall","-Wextra","-pedantic","-Wshadow","-Wformat=2","-Wfloat-equal","-Wconversion","-Wlogical-op","-Wshift-overflow=2","-Wduplicated-cond","-Wcast-qual","-Wcast-align","-Wno-unused-result","-Wno-sign-conversion","-DLOCAL", "$(FNAME)", "-o", "$(FNOEXT)" } },
+  },
+}
+vim.keymap.set("n", "<leader>cr", "<cmd>CompetiTest receive contest<CR>")
+vim.keymap.set("n", "<leader>ct", "<cmd>CompetiTest run<CR>")
 
 -- alpha dashboard
 require('alpha_conf')
@@ -597,8 +602,11 @@ cmp.event:on(
 require("which-key").setup {}
 
 -- indent line
-require("indent_blankline").setup {}
-vim.g.indent_blankline_filetype_exclude = vim.list_extend(vim.g.indent_blankline_filetype_exclude,{"alpha", "neo-tree"})
+require("ibl").setup{
+  exclude = {
+    filetypes = {"alpha", "neo-tree"}
+  }
+}
 
 -- marks
 -- require('marks').setup{}
@@ -750,3 +758,11 @@ require("noice").setup({
   },
 
 })
+
+-- oil.nvim
+require("oil").setup{
+  view_options = {
+    show_hidden = true,
+  }
+}
+

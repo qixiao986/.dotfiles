@@ -1,9 +1,5 @@
 local alpha = require('alpha')
 local dashboard = require('alpha.themes.dashboard')
-function _cd_cpdir()
-  vim.cmd[[cd /Users/ndz/Documents/code/github/algo]]
-  vim.cmd[[CphReceive]]
-end
 
 function _del_redofile()
   os.execute('rm -f ' .. os.getenv( "HOME" ) ..'/.config/nvim/undodir/*')
@@ -11,8 +7,8 @@ function _del_redofile()
 end
 dashboard.section.buttons.val = {
   dashboard.button( "e", "  > New file" , "<cmd>ene <CR>"),
-  dashboard.button( "c", "  > Competitive", "<cmd>lua _cd_cpdir()<CR>"),
-  dashboard.button( "u", "  > Update"   , "<cmd>:Lazy update<CR>"),
+  dashboard.button( "c", "  > Competitive", "<cmd>CompetiTest receive contest<CR>"),
+  dashboard.button( "u", "  > Update"   , "<cmd>Lazy update<CR>"),
   dashboard.button( "f", "  > Find Files" , "<cmd>Telescope find_files<cr>"),
   dashboard.button( "d", "﯊  > Del RedoFile", "<cmd>lua _del_redofile()<CR>"),
 }
