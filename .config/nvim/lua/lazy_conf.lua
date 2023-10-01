@@ -47,7 +47,7 @@ require('lazy').setup({
   'folke/twilight.nvim',
   'jedrzejboczar/possession.nvim',
   'jedrzejboczar/toggletasks.nvim',
-  'declancm/cinnamon.nvim',
+  'karb94/neoscroll.nvim',
   'stevearc/dressing.nvim',
   {'kevinhwang91/nvim-ufo', dependencies = {'kevinhwang91/promise-async'}},
   {
@@ -111,6 +111,9 @@ require('lazy').setup({
   {
     url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   },
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  'mfussenegger/nvim-dap',
 
   -- cmp
   'hrsh7th/nvim-cmp',
@@ -133,14 +136,17 @@ require('lazy').setup({
   'norcalli/nvim-colorizer.lua',
   'connorholyday/vim-snazzy',
   'folke/which-key.nvim',
-  { 
+  {
     'anuvyklack/hydra.nvim',
     dependencies = {'anuvyklack/keymap-layer.nvim'} -- needed only for pink hydras
   },
 
   -- language specific
   {"ellisonleao/glow.nvim", branch = 'main'}, --markdown preview,
-}, 
+  { "folke/neodev.nvim", },
+  { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} },
+
+},
   -- opts
 {
   checker = {

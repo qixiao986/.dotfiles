@@ -75,6 +75,12 @@ vim.opt.foldlevel = 1
 -- treesitter-context
 require'treesitter-context'.setup{}
 
+-- mason
+require("mason").setup()
+require("mason-lspconfig").setup {
+    ensure_installed = { "lua_ls",},
+}
+
 -- LSP
 local nvim_lsp = require('lspconfig')
 
@@ -135,18 +141,20 @@ local lsp_on_attach = function(client, bufnr)
   -- buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<Leader>lq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
-  buf_set_keymap("n", "<Leader>lr", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
-  buf_set_keymap("n", "<Leader>lc", "<cmd>CodeActionMenu<cr>", {silent = true, noremap = true})
-  buf_set_keymap("x", "gx", ":<c-u>CodeActionMenu<cr>", {silent = true, noremap = true})
-  buf_set_keymap("n", "K",  "<cmd>Lspsaga hover_doc<cr>", {silent = true, noremap = true})
-  buf_set_keymap("n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent = true, noremap = true})
-  buf_set_keymap("n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent = true, noremap = true})
-  buf_set_keymap("n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
+  buf_set_keymap("n", "<Leader>lr", "<cmd>Lspsaga rename<cr>", opts)
+  buf_set_keymap("n", "<Leader>lc", "<cmd>CodeActionMenu<cr>", opts)
+  buf_set_keymap("x", "gx", ":<c-u>CodeActionMenu<cr>", opts)
+  buf_set_keymap("n", "K",  "<cmd>Lspsaga hover_doc<cr>", opts)
+  buf_set_keymap("n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", opts)
+  buf_set_keymap("n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", opts)
+  buf_set_keymap("n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", opts)
   buf_set_keymap("n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
   buf_set_keymap("n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
+  vim.keymap.set({'n', 'v'}, '<Leader>lf', function()
+    vim.lsp.buf.format { async = true }
+  end, opts)
 
 end
-vim.keymap.set('n', '<Leader>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 
 -- nvim-code-action-menu
 vim.g.code_action_menu_show_details = true
@@ -336,7 +344,7 @@ capabilities.textDocument.foldingRange = {
 }
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "clangd", "pyright", "gopls" }
+local servers = { "clangd", "pyright", "gopls", "lua_ls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = lsp_on_attach,
@@ -685,12 +693,8 @@ require('numb').setup{}
 -- null-ls
 require("null-ls_conf")
 
--- cinnamon
-require('cinnamon').setup{
-  extra_keymaps = true,
-  extended_keymaps = true,
-  override_keymaps = false,
-}
+-- neoscroll
+require('neoscroll').setup()
 
 --dressing
 require('dressing').setup{}
@@ -766,3 +770,45 @@ require("oil").setup{
   }
 }
 
+-- dap
+local dap = require('dap')
+dap.adapters.cppdbg = {
+  id = 'cppdbg',
+  type = 'executable',
+  command = '/Users/ndz/.local/share/nvim/mason/bin/OpenDebugAD7',
+}
+dap.adapters.codelldb = {
+  type = 'server',
+  port = "${port}",
+  executable = {
+    -- CHANGE THIS to your path!
+    command = '/Users/ndz/.local/share/nvim/mason/bin/codelldb',
+    args = {"--port", "${port}"},
+
+    -- On windows you may have to uncomment this:
+    -- detached = false,
+  }
+}
+dap.configurations.cpp = {
+  {
+    name = "Launch file",
+    type = "codelldb",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopAtEntry = true,
+  },
+}
+
+require("neodev").setup({
+  library = { plugins = { "nvim-dap-ui" }, types = true },
+})
+require("dapui").setup()
+vim.keymap.set('n', '<leader>bt', require("dapui").toggle);
+vim.keymap.set('n', '<F5>', require 'dap'.continue)
+vim.keymap.set('n', '<F10>', require 'dap'.step_over)
+vim.keymap.set('n', '<F11>', require 'dap'.step_into)
+vim.keymap.set('n', '<F12>', require 'dap'.step_out)
+vim.keymap.set('n', '<leader>bb', require 'dap'.toggle_breakpoint)
