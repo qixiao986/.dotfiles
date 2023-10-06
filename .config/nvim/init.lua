@@ -123,7 +123,6 @@ local lsp_on_attach = function(client, bufnr)
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', 'gk', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
@@ -134,11 +133,7 @@ local lsp_on_attach = function(client, bufnr)
   buf_set_keymap('n', '<Leader>lwr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<Leader>lwl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 
-  -- buf_set_keymap('n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  -- buf_set_keymap('n', '<Leader>lc', '<cmd>Telescope lsp_code_actions<CR>', opts)
   buf_set_keymap('n', '<Leader>le', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  -- buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  -- buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<Leader>lq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
   buf_set_keymap("n", "<Leader>lr", "<cmd>Lspsaga rename<cr>", opts)
@@ -146,10 +141,8 @@ local lsp_on_attach = function(client, bufnr)
   buf_set_keymap("x", "gx", ":<c-u>CodeActionMenu<cr>", opts)
   buf_set_keymap("n", "K",  "<cmd>Lspsaga hover_doc<cr>", opts)
   buf_set_keymap("n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", opts)
-  buf_set_keymap("n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", opts)
-  buf_set_keymap("n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", opts)
-  buf_set_keymap("n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
-  buf_set_keymap("n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
+  buf_set_keymap("n", "[d", "<cmd>Lspsaga diagnostic_jump_next<cr>", opts)
+  buf_set_keymap("n", "]d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", opts)
   vim.keymap.set({'n', 'v'}, '<Leader>lf', function()
     vim.lsp.buf.format { async = true }
   end, opts)
@@ -571,7 +564,13 @@ require('competitest').setup {
   received_problems_path = "$(HOME)/Documents/code/github/algo/contests/$(JUDGE)/$(CONTEST)/$(PROBLEM).$(FEXT)",
   received_contests_directory = "$(HOME)/Documents/code/github/algo/contests/$(JUDGE)/$(CONTEST)",
   compile_command = {
-    cpp = { exec = "g++-13", args = { "-std=c++17", "-O2","-Wall","-Wextra","-pedantic","-Wshadow","-Wformat=2","-Wfloat-equal","-Wconversion","-Wlogical-op","-Wshift-overflow=2","-Wduplicated-cond","-Wcast-qual","-Wcast-align","-Wno-unused-result","-Wno-sign-conversion","-DLOCAL", "$(FNAME)", "-o", "$(FNOEXT)" } },
+    cpp = { exec = "g++", args = { "-std=c++17", "-O2","-Wall","-Wextra","-pedantic","-Wshadow","-Wformat=2","-Wfloat-equal","-Wconversion","-Wlogical-op","-Wshift-overflow=2","-Wduplicated-cond","-Wcast-qual","-Wcast-align","-Wno-unused-result","-Wno-sign-conversion","-DLOCAL", "$(FNAME)", "-o", "$(FNOEXT)" } },
+  },
+  runner_ui = {
+    viewer = {
+      width = 1,
+      height = 1,
+    },
   },
 }
 vim.keymap.set("n", "<leader>cr", "<cmd>CompetiTest receive contest<CR>")
@@ -806,9 +805,9 @@ require("neodev").setup({
   library = { plugins = { "nvim-dap-ui" }, types = true },
 })
 require("dapui").setup()
-vim.keymap.set('n', '<leader>bt', require("dapui").toggle);
-vim.keymap.set('n', '<F5>', require 'dap'.continue)
-vim.keymap.set('n', '<F10>', require 'dap'.step_over)
-vim.keymap.set('n', '<F11>', require 'dap'.step_into)
-vim.keymap.set('n', '<F12>', require 'dap'.step_out)
-vim.keymap.set('n', '<leader>bb', require 'dap'.toggle_breakpoint)
+-- vim.keymap.set('n', '<leader>bt', require("dapui").toggle)
+-- vim.keymap.set('n', '<F5>', require 'dap'.continue)
+-- vim.keymap.set('n', '<F10>', require 'dap'.step_over)
+-- vim.keymap.set('n', '<F11>', require 'dap'.step_into)
+-- vim.keymap.set('n', '<F12>', require 'dap'.step_out)
+-- vim.keymap.set('n', '<leader>bb', require 'dap'.toggle_breakpoint)

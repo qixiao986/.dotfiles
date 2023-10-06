@@ -10,7 +10,7 @@ vim.keymap.set('i', '<C-h>', '<left>')
 vim.keymap.set('i', '<C-j>', '<down>')
 vim.keymap.set('i', '<C-k>', '<up>')
 
-vim.keymap.set('n', '<leader>d', '"_d')
+vim.keymap.set('n', 'd', '"_d')
 vim.keymap.set('n', 'yA', '<cmd>%y<CR>')
 vim.keymap.set('n', 'dA', 'gg"_dG')
 vim.keymap.set('n', 'Y', 'y$')

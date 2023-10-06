@@ -9,8 +9,8 @@ dashboard.section.buttons.val = {
   dashboard.button( "e", "  > New file" , "<cmd>ene <CR>"),
   dashboard.button( "c", "  > Competitive", "<cmd>CompetiTest receive contest<CR>"),
   dashboard.button( "u", "  > Update"   , "<cmd>Lazy update<CR>"),
-  dashboard.button( "r", "  > Recent"   , "<cmd>Telescope oldfiles<CR>"),
-  dashboard.button( "d", "﯊  > Del RedoFile", "<cmd>lua _del_redofile()<CR>"),
+  dashboard.button( "r", "󱫒  > Recent Files"   , "<cmd>Telescope oldfiles<CR>"),
+  dashboard.button( "d", "  > Del RedoFile", "<cmd>lua _del_redofile()<CR>"),
 }
 dashboard.section.header.val =
 {

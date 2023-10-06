@@ -105,7 +105,7 @@ require('lazy').setup({
   { 'nvim-treesitter/nvim-treesitter-refactor' },
   { 'nvim-treesitter/nvim-treesitter-context' },
   'p00f/nvim-ts-rainbow',
-  { 'jose-elias-alvarez/null-ls.nvim' },
+  { 'nvimtools/none-ls.nvim' },
   'mfussenegger/nvim-jdtls',
   'JoosepAlviste/nvim-ts-context-commentstring',
   {

@@ -594,66 +594,68 @@ local Space = { provider = " " }
 ViMode = utils.surround({ "", "" }, colors.gray, { ViMode, Snippets })
 
 local DefaultStatusline = {
-	ViMode,
-	Space,
-	FileNameBlock,
-	Space,
-	Git,
-	Space,
-	Diagnostics,
-	Align,
-	Navic,
-	Align,
-  WorkDir,
+  ViMode,
   Space,
   CmdStatus,
   Space,
   MacroStatus,
+  Space,
+  FileNameBlock,
+  Space,
+  Git,
+  Space,
+  Diagnostics,
+  Align,
+  Navic,
+  Align,
+  WorkDir,
   Space,
   PluginStatus,
   Space,
-	LSPActive,
-	Space,
-	FileType,
-	Space,
-	Ruler,
-	Space,
-	ScrollBar,
+  LSPActive,
+  Space,
+  FileType,
+  Space,
+  FileEncoding,
+  Space,
+  Ruler,
+  Space,
+  ScrollBar,
 }
 
 local InactiveStatusline = {
-	condition = function()
-		return not conditions.is_active()
-	end,
+  condition = function()
+    return not conditions.is_active()
+  end,
 
-	FileType,
-	Space,
-	FileNameBlock,
-	Align,
+  FileType,
+  Space,
   CmdStatus,
   Space,
   MacroStatus,
   Space,
+  FileNameBlock,
+  Align,
   PluginStatus,
   Space,
 }
 
 local SpecialStatusline = {
-	condition = function()
-		return conditions.buffer_matches({
-			buftype = { "nofile", "prompt", "help", "quickfix" },
-			filetype = { "^git.*", "fugitive" },
-		})
-	end,
+  condition = function()
+    return conditions.buffer_matches({
+      buftype = { "nofile", "prompt", "help", "quickfix" },
+      filetype = { "^git.*", "fugitive" },
+    })
+  end,
 
-	FileType,
-	Space,
-	HelpFileName,
-	Align,
+  FileType,
+  Space,
   CmdStatus,
   Space,
   MacroStatus,
   Space,
+  HelpFileName,
+  Align,
   PluginStatus,
   Space,
 }
@@ -667,15 +669,19 @@ local TerminalStatusline = {
 	hl = { bg = colors.dark_red },
 
 	-- Quickly add a condition to the ViMode to only show it when buffer is active!
-	{ condition = conditions.is_active, ViMode, Space },
+  {
+    condition = conditions.is_active,
+    ViMode,
+    Space,
+    CmdStatus,
+    Space,
+    MacroStatus,
+    Space,
+  },
 	FileType,
 	Space,
 	TerminalName,
 	Align,
-  CmdStatus,
-  Space,
-  MacroStatus,
-  Space,
 }
 
 local StatusLines = {
