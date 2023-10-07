@@ -36,7 +36,7 @@ require('lazy').setup({
   { 'rebelot/heirline.nvim' },
   'SmiteshP/nvim-navic',
   'altercation/vim-colors-solarized',
-  'willothy/nvim-cokeline',
+  -- 'willothy/nvim-cokeline',
   'akinsho/toggleterm.nvim',
   'kevinhwang91/nvim-hlslens',
   'petertriho/nvim-scrollbar',
@@ -71,7 +71,6 @@ require('lazy').setup({
   'lewis6991/gitsigns.nvim',
   {
       'glacambre/firenvim',
-
       -- Lazy load firenvim
       -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
       lazy = not vim.g.started_by_firenvim,
@@ -154,4 +153,5 @@ require('lazy').setup({
   }
 }
 )
+
 

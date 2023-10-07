@@ -276,7 +276,7 @@ cmp.setup({
       }),
       ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
-      ['<C-[>'] = cmp.mapping({ i = cmp.mapping.close(), c = cmp.mapping.close() }),
+      ['<C-]>'] = cmp.mapping({ i = cmp.mapping.close(), c = cmp.mapping.close() }),
       ['<CR>'] = cmp.mapping({
           i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
           c = function(fallback)
@@ -457,7 +457,7 @@ require('Comment').setup {
 -- vim.keymap.set('n', '<F5>', '<Plug>SnipRun')
 
 -- nvim-cokeline
-require('cokeline_conf')
+-- require('cokeline_conf')
 
 -- minimap
 vim.cmd [[highlight VertSplit cterm=NONE]]
@@ -707,8 +707,8 @@ require('nvim-surround').setup{}
 -- lsp_liness
 require('lsp_lines').setup{}
 vim.diagnostic.config({
-  virtual_text = false,
-  virtual_lines = true,
+  virtual_text = true,
+  virtual_lines = false,
 })
 
 -- rnvimr
