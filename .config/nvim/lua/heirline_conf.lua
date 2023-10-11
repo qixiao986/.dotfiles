@@ -111,6 +111,15 @@ local FileName = {
 	end,
 	hl = { fg = utils.get_highlight("Directory").fg },
 
+  on_click = {
+    name = "heirline_filename",
+    callback = function()
+      vim.defer_fn(function()
+        local dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
+        vim.cmd("cd ".. dir)
+      end, 100)
+    end,
+  },
   {
 		provider = function(self)
 			return self.lfilename
@@ -523,6 +532,14 @@ local PluginStatus = {
   provider = function()
     return require("lazy.status").updates()
   end,
+  on_click = {
+    name = "heirline_lazy",
+    callback = function()
+      vim.defer_fn(function()
+        vim.cmd("Lazy update")
+      end, 100)
+    end,
+  },
   hl = { fg = colors.red },
 }
 
@@ -742,7 +759,7 @@ local TablineFileFlags = {
 			return vim.api.nvim_buf_get_option(self.bufnr, "modified")
 		end,
 		provider = " ●",
-		hl = { fg = "green" },
+		hl = { fg = "yellow" },
 	},
 	{
 		condition = function(self)
