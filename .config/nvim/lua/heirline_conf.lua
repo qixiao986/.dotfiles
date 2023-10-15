@@ -421,7 +421,14 @@ local Diagnostics = {
 		self.hints = #vim.diagnostic.get(self.bufnr or bufnr, { severity = vim.diagnostic.severity.HINT })
 		self.info = #vim.diagnostic.get(self.bufnr or bufnr, { severity = vim.diagnostic.severity.INFO })
 	end,
-
+  on_click = {
+    callback = function()
+      require("trouble").toggle({ mode = "document_diagnostics" })
+      -- or
+      -- vim.diagnostic.setqflist()
+    end,
+    name = "heirline_diagnostics",
+  },
 	update = { "DiagnosticChanged", "BufEnter" },
 
 	{

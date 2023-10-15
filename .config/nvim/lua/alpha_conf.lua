@@ -1,16 +1,12 @@
 local alpha = require('alpha')
 local dashboard = require('alpha.themes.dashboard')
 
-function _del_redofile()
-  os.execute('rm -f ' .. os.getenv( "HOME" ) ..'/.config/nvim/undodir/*')
-  print("done...")
-end
 dashboard.section.buttons.val = {
   dashboard.button( "e", "  > New file" , "<cmd>ene <CR>"),
   dashboard.button( "c", "  > Competitive", "<cmd>CompetiTest receive contest<CR>"),
   dashboard.button( "u", "  > Update"   , "<cmd>Lazy update<CR>"),
   dashboard.button( "r", "󱫒  > Recent Files"   , "<cmd>Telescope oldfiles<CR>"),
-  dashboard.button( "d", "  > Del RedoFile", "<cmd>lua _del_redofile()<CR>"),
+  dashboard.button( "d", "  > Del RedoFile", "<cmd>Oil " .. os.getenv( "HOME" ) ..'/.config/nvim/undodir/' .. "<CR>"),
 }
 dashboard.section.header.val =
 {
