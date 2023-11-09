@@ -1,28 +1,32 @@
-vim.opt.packpath = {'/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site','/home/qixiao/squashfs-root/usr/share/nvim/runtime','/home/qixiao/squashfs-root/usr/lib/nvim','/usr/share/nvim/site/after','/usr/local/share/nvim/site/after','/etc/xdg/nvim/after'}
-vim.opt.runtimepath = {'/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site','/home/qixiao/squashfs-root/usr/share/nvim/runtime','/home/qixiao/squashfs-root/usr/share/nvim/runtime/pack/dist/opt/matchit','/home/qixiao/squashfs-root/usr/lib/nvim','/usr/share/nvim/site/after','/usr/local/share/nvim/site/after','/etc/xdg/nvim/after'}
-local root_path = vim.fn.expand('~/nvim_vscode_config')
-vim.opt.runtimepath:append(root_path)
-vim.opt.packpath:append(root_path .. '/packer')
+-- vim.opt.packpath = {'/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site','/home/qixiao/squashfs-root/usr/share/nvim/runtime','/home/qixiao/squashfs-root/usr/lib/nvim','/usr/share/nvim/site/after','/usr/local/share/nvim/site/after','/etc/xdg/nvim/after'}
+-- vim.opt.runtimepath = {'/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site','/home/qixiao/squashfs-root/usr/share/nvim/runtime','/home/qixiao/squashfs-root/usr/share/nvim/runtime/pack/dist/opt/matchit','/home/qixiao/squashfs-root/usr/lib/nvim','/usr/share/nvim/site/after','/usr/local/share/nvim/site/after','/etc/xdg/nvim/after'}
+-- local root_path = vim.fn.expand('~/nvim_vscode_config')
+-- vim.opt.runtimepath:append(root_path)
+-- vim.opt.packpath:append(root_path .. '/packer')
 
-local packer = require('packer')
-packer.reset()
-packer.init({
-  display = {
-    open_fn = require'packer.util'.float
-  },
-  package_root = root_path,
-  compile_path = root_path .. "/lua/packer_compiled.lua"
-})
 
-packer.startup(function()
-  use 'wbthomason/packer.nvim'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
 
-  use 'ggandor/leap.nvim'
-  use 'kevinhwang91/nvim-hlslens'
+vim.opt.rtp:prepend(lazypath)
+
+require('lazy').setup({
+
+  'ggandor/leap.nvim',
+  'kevinhwang91/nvim-hlslens',
   -- editor plugins
-  use 'numtostr/comment.nvim'
-  use 'kylechui/nvim-surround'
-end)
+  'numtostr/comment.nvim',
+  'kylechui/nvim-surround',
+})
 
 function t(str)
     -- Adjust boolean arguments as needed

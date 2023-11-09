@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/ndz/.oh-my-zsh"
+export ZSH="/Users/qixiao/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -105,9 +105,10 @@ bindkey -M vicmd v edit-command-line
 source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias ll='ls -ahl'
+alias python='/opt/homebrew/bin/python3'
 alias killpy="ps aux|grep python|grep -v grep | awk '{print \$2}' | xargs kill -9"
 alias rmexe="find . -maxdepth 1 -type f ! -name '*.*'  -exec rm -f {} +"
-alias cfg='/usr/local/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias cfg='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias rr='ranger'
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export PATH="/usr/local/lib/ruby/gems/3.1.0/bin:$PATH"
@@ -126,9 +127,10 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 export LC_CTYPE="en_US.UTF-8"
 
-export PATH="/usr/local/opt/node@16/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
 JAVA_HOME=$HOME/Documents/jdk18
 PATH=$JAVA_HOME/bin:$PATH
+PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 CLASS_PATH=$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:.
 export JAVA_HOME
 export PATH

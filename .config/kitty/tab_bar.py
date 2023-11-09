@@ -1,5 +1,6 @@
 from kitty.fast_data_types import Screen
-from kitty.tab_bar import DrawData, ExtraData, TabBarData, draw_title
+from kitty.tab_bar import DrawData, ExtraData, TabBarData, draw_title, as_rgb
+from kitty.utils import color_as_int
 
 def draw_tab(
     draw_data: DrawData, screen: Screen, tab: TabBarData,
@@ -11,7 +12,7 @@ def draw_tab(
     left_sep, right_sep = ('', '')
 
     def draw_sep(which: str) -> None:
-        screen.cursor.bg = draw_data.default_bg
+        screen.cursor.bg = as_rgb(color_as_int(draw_data.default_bg))
         screen.cursor.fg = orig_bg
         screen.draw(which)
         screen.cursor.bg = orig_bg
