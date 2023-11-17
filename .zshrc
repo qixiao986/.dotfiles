@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -112,7 +114,8 @@ bindkey -M vicmd v edit-command-line
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-alias ll='ls -ahl'
+alias ll='eza -al'
+alias ls='eza --no-quotes'
 alias python='/opt/homebrew/bin/python3'
 alias killpy="ps aux|grep python|grep -v grep | awk '{print \$2}' | xargs kill -9"
 alias rmexe="find . -maxdepth 1 -type f ! -name '*.*'  -exec rm -f {} +"
@@ -154,3 +157,6 @@ eval "$(starship init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

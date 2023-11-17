@@ -202,10 +202,20 @@ FileNameBlock = utils.insert(
 )
 
 local FileType = {
-	provider = function()
-		return string.upper(vim.bo.filetype)
-	end,
-	hl = { fg = utils.get_highlight("Type").fg, bold = true },
+  provider = function()
+    return string.upper(vim.bo.filetype)
+  end,
+  hl = { fg = utils.get_highlight("Type").fg, bold = true },
+  on_click = {
+    name = "heirline_filetype",
+    callback = function()
+      vim.defer_fn(function()
+        if string.upper(vim.bo.filetype) == "TEXT" then
+          vim.cmd("set filetype=cpp")
+        end
+      end, 100)
+    end,
+  },
 }
 
 local FileEncoding = {
