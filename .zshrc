@@ -138,6 +138,10 @@ function small() {
   ls "$1"  |gxargs -d'\n' -I {} ffmpeg -i {} -vn -ab 64k -f mp3 {}.mp3
 }
 
+function big() {
+  ls "$1"  |gxargs -d'\n' -I {} ffmpeg -i {} -vn -ab 320k -f mp3 {}.mp3
+}
+
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 export LC_CTYPE="en_US.UTF-8"
@@ -157,6 +161,7 @@ eval "$(starship init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+eval "$(zoxide init zsh)"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

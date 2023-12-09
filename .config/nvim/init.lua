@@ -766,10 +766,21 @@ require("noice").setup({
 vim.keymap.set("n", "<leader>fn", "<cmd>Noice telescope<cr>")
 
 -- oil.nvim
-require("oil").setup{
+require("oil").setup {
   view_options = {
     show_hidden = true,
-  }
+  },
+  columns = {
+    "icon",
+    -- "permissions",
+    -- "size",
+    -- "mtime",
+  },
+  buf_options = {
+    buflisted = true,
+    bufhidden = "hide",
+  },
+  cleanup_delay_ms = false,
 }
 
 -- dap
