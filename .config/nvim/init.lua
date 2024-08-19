@@ -11,7 +11,6 @@ treesitter.setup {
   indent = { enable = true },
   rainbow = { enable = true, extended_mode = true, },
   incremental_selection = { enable = true },
-  context_commentstring = { enable = true, enable_autocmd = false },
   textobjects = {
     select = {
       enable = true,
@@ -68,6 +67,7 @@ treesitter.setup {
   },
 }
 
+require('nvim-treesitter.configs').setup {}
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldlevel = 1
@@ -696,7 +696,7 @@ require('numb').setup{}
 require("null-ls_conf")
 
 -- neoscroll
-require('neoscroll').setup()
+require('neoscroll').setup{}
 
 --dressing
 require('dressing').setup{}
@@ -784,41 +784,41 @@ require("oil").setup {
 }
 
 -- dap
-local dap = require('dap')
-dap.adapters.cppdbg = {
-  id = 'cppdbg',
-  type = 'executable',
-  command = '/Users/ndz/.local/share/nvim/mason/bin/OpenDebugAD7',
-}
-dap.adapters.codelldb = {
-  type = 'server',
-  port = "${port}",
-  executable = {
-    -- CHANGE THIS to your path!
-    command = '/Users/ndz/.local/share/nvim/mason/bin/codelldb',
-    args = {"--port", "${port}"},
-
-    -- On windows you may have to uncomment this:
-    -- detached = false,
-  }
-}
-dap.configurations.cpp = {
-  {
-    name = "Launch file",
-    type = "codelldb",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopAtEntry = true,
-  },
-}
-
-require("neodev").setup({
-  library = { plugins = { "nvim-dap-ui" }, types = true },
-})
-require("dapui").setup()
+-- local dap = require('dap')
+-- dap.adapters.cppdbg = {
+--   id = 'cppdbg',
+--   type = 'executable',
+--   command = '/Users/ndz/.local/share/nvim/mason/bin/OpenDebugAD7',
+-- }
+-- dap.adapters.codelldb = {
+--   type = 'server',
+--   port = "${port}",
+--   executable = {
+--     -- CHANGE THIS to your path!
+--     command = '/Users/ndz/.local/share/nvim/mason/bin/codelldb',
+--     args = {"--port", "${port}"},
+--
+--     -- On windows you may have to uncomment this:
+--     -- detached = false,
+--   }
+-- }
+-- dap.configurations.cpp = {
+--   {
+--     name = "Launch file",
+--     type = "codelldb",
+--     request = "launch",
+--     program = function()
+--       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+--     end,
+--     cwd = '${workspaceFolder}',
+--     stopAtEntry = true,
+--   },
+-- }
+--
+-- require("neodev").setup({
+--   library = { plugins = { "nvim-dap-ui" }, types = true },
+-- })
+-- require("dapui").setup()
 -- vim.keymap.set('n', '<leader>bt', require("dapui").toggle)
 -- vim.keymap.set('n', '<F5>', require 'dap'.continue)
 -- vim.keymap.set('n', '<F10>', require 'dap'.step_over)

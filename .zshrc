@@ -1,5 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -116,13 +114,13 @@ source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighti
 
 alias ll='eza -al'
 alias ls='eza --no-quotes'
-alias python='/opt/homebrew/bin/python3'
+alias python='/opt/homebrew/bin/python3.11'
 alias killpy="ps aux|grep python|grep -v grep | awk '{print \$2}' | xargs kill -9"
 alias rmexe="find . -maxdepth 1 -type f ! -name '*.*'  -exec rm -f {} +"
 alias cfg='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias rr='ranger'
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-export PATH="/usr/local/lib/ruby/gems/3.1.0/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="/usr/local/lib/ruby/gems/3.3.0/bin:$PATH"
 # export PATH="/usr/local/opt/llvm/bin:$PATH"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if type rg &> /dev/null; then
@@ -163,6 +161,8 @@ eval "$(starship init zsh)"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 eval "$(zoxide init zsh)"
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+export PUB_HOSTED_URL="https://pub.flutter-io.cn"
+export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
+export PATH="$HOME/Documents/flutter/bin:$PATH"
 

@@ -40,3 +40,16 @@ function ClearNoiceAndHL()
   vim.cmd("nohl")
   vim.fn.feedkeys("<C-L><CR>")
 end
+
+function InputQEvery3Seconds()
+  local timer = vim.uv.new_timer()
+  local i = 1
+  timer:start(3000, 3000, vim.schedule_wrap(function()
+    if i > 5 then
+      timer:close()
+    else
+      vim.fn.feedkeys("Q")
+      i = i + 1
+    end
+  end))
+end
