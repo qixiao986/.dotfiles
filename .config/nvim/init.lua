@@ -414,7 +414,10 @@ require('telescope').setup {
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>:', builtin.command_history, {})
+vim.keymap.set('n', '<leader>/', builtin.search_history, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fr', builtin.registers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
@@ -567,7 +570,10 @@ require('competitest').setup {
   received_problems_path = "$(HOME)/Documents/code/github/algo/contests/$(JUDGE)/$(CONTEST)/$(PROBLEM).$(FEXT)",
   received_contests_directory = "$(HOME)/Documents/code/github/algo/contests/$(JUDGE)/$(CONTEST)",
   compile_command = {
-    cpp = { exec = "g++", args = { "-std=c++17", "-O2","-Wall","-Wextra","-pedantic","-Wshadow","-Wformat=2","-Wfloat-equal","-Wconversion","-Wlogical-op","-Wshift-overflow=2","-Wduplicated-cond","-Wcast-qual","-Wcast-align","-Wno-unused-result","-Wno-sign-conversion","-DLOCAL", "$(FNAME)", "-o", "$(FNOEXT)" } },
+    cpp = { exec = "g++-14", args = { "-std=c++20", "-O2","-Wall","-Wextra","-pedantic","-Wshadow","-Wformat=2","-Wfloat-equal","-Wconversion","-Wlogical-op","-Wshift-overflow=2","-Wduplicated-cond","-Wcast-qual","-Wcast-align","-Wno-unused-result","-Wno-sign-conversion","-DLOCAL", "$(FNAME)", "-o", "a.out" } },
+  },
+  run_command = {
+    cpp       = { exec = './a.out' },
   },
   runner_ui = {
     viewer = {
@@ -826,3 +832,24 @@ require("oil").setup {
 -- vim.keymap.set('n', '<F12>', require 'dap'.step_out)
 -- vim.keymap.set('n', '<leader>bb', require 'dap'.toggle_breakpoint)
 
+-- firenvim
+if vim.g.started_by_firenvim == true then
+  function _firenvim_resize()
+    vim.cmd [[set lines=80]]
+    vim.cmd [[set columns=240]]
+    vim.cmd [[set guifont = "JetBrainsMono Nerd Font:h18"]]
+    vim.cmd [[setfiletype cpp]]
+    vim.keymap.set("n", "Zz", '<cmd>wq<cr>')
+  end
+
+  vim.keymap.set("n", "<leader>;", _firenvim_resize)
+  vim.g.firenvim_config = {
+    localSettings = {
+      ['.*'] = {
+        filename = '/tmp/{hostname}_{pathname%10}_{selector%32}.{extension}',
+        takeover = 'never',
+        priority = 1,
+      }
+    }
+  }
+end

@@ -436,9 +436,10 @@ local vim = VimMode:new()
 
 vim
   :disableForApp('Code')
-  :disableForApp('neovim')
+  :disableForApp('nvim')
   :disableForApp('MacVim')
   :disableForApp('zoom.us')
+  :disableForApp('kitty')
   :enterWithSequence('\\\\')
 
 

@@ -76,14 +76,18 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git macos rake bundler dotenv zsh-autosuggestions zsh-syntax-highlighting vi-mode)
+plugins=(git macos rake bundler dotenv zsh-autosuggestions zsh-syntax-highlighting zsh-vi-mode)
 
 export VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 export VI_MODE_SET_CURSOR=true
 export VISUAL=nvim
 source $ZSH/oh-my-zsh.sh
-autoload edit-command-line; zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
+# Only changing the escape key to `jk` in insert mode, we still
+# keep using the default keybindings `^[` in other modes
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+ZVM_VI_EDITOR=nvim
+# autoload edit-command-line; zle -N edit-command-line
+# bindkey -M vicmd v edit-command-line
 
 # User configuration
 
@@ -122,7 +126,11 @@ alias rr='ranger'
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/usr/local/lib/ruby/gems/3.3.0/bin:$PATH"
 # export PATH="/usr/local/opt/llvm/bin:$PATH"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# The plugin will auto execute this zvm_after_init function
+function zvm_after_init() {
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+}
 if type rg &> /dev/null; then
   export FZF_DEFAULT_COMMAND='rg --files'
   export FZF_DEFAULT_OPTS='-m --height 50% --border'
@@ -165,4 +173,4 @@ eval "$(zoxide init zsh)"
 export PUB_HOSTED_URL="https://pub.flutter-io.cn"
 export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
 export PATH="$HOME/Documents/flutter/bin:$PATH"
-
+export CPLUS_INCLUDE_PATH="$HOME/Downloads/ac-library/:/opt/homebrew/Cellar/gcc/14.2.0/bin/../lib/gcc/current/gcc/aarch64-apple-darwin23/14/../../../../../../include/c++/14/aarch64-apple-darwin23"

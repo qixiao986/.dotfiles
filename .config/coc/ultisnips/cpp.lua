@@ -34,27 +34,18 @@ return {
     [[
 /* {} */
 #include<bits/stdc++.h>
-#include<iostream>
 using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
 #define mp make_pair
 #define fst first
 #define snd second
-#define fr(i, a, b) for(int i=a; i<b; i++)
 #define rep(i, begin, end) for (__typeof(end) i = (begin) - ((begin) > (end)); i != (end) - ((begin) > (end)); i += 1 - 2 * ((begin) > (end)))
 
 {}
     ]],
     { t(os.date("%Y-%m-%d %X")),
       c(1, {
-        sn(nil, fmt([[
-int main() {{
-	cin.tie(nullptr); ios::sync_with_stdio(false);
-  {}
-}}
-        ]], {i(1)})
-        ),
         sn(nil, fmt([[
 void main2() {{
   {}
@@ -72,6 +63,14 @@ int main() {{
 }}
         ]], {i(1)})
         ),
+        sn(nil, fmt([[
+int main() {{
+	cin.tie(nullptr); ios::sync_with_stdio(false);
+  {}
+}}
+        ]], {i(1)})
+        ),
+
       })
     })
   ),

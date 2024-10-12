@@ -138,6 +138,15 @@ local FileNameBlock = {
 	init = function(self)
 		self.filename = vim.api.nvim_buf_get_name(0)
 	end,
+  on_click = {
+    name = "heirline_filename",
+    callback = function()
+      vim.defer_fn(function()
+        local dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
+        vim.cmd("cd ".. dir)
+      end, 100)
+    end,
+  }
 }
 -- We can now define some children separately and add them later
 
@@ -837,7 +846,7 @@ local TablineCloseButton = {
 	end,
 	{ provider = " " },
 	{
-		provider = "",
+		provider = "󱎘",
 		hl = { fg = "gray" },
 		on_click = {
 			callback = function(_, minwid)
