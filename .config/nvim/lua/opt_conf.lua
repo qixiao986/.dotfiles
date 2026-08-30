@@ -48,7 +48,7 @@ vim.opt.cindent = true
 vim.opt.cinoptions = {'N-s', 'g0', 'j1', '(s', 'm1'}
 
 vim.opt.errorformat:prepend('%-GIn file included %.%#')
-vim.opt.guifont = "JetBrainsMono Nerd Font:h12"
+vim.opt.guifont = "Google Sans Code:h12"
 --gui don't need set lang, terminal nvim need set lang to make the copy right
 if vim.fn.has('gui_vimr') == 0 then
  -- vim.cmd [[language en_US]]

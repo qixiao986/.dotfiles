@@ -119,7 +119,7 @@ source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighti
 alias ll='eza -al'
 alias ls='eza --no-quotes'
 alias python='/opt/homebrew/bin/python3.11'
-alias killpy="ps aux|grep python|grep -v grep | awk '{print \$2}' | xargs kill -9"
+alias killpy="ps aux|grep python|grep 3.11|grep -v grep | awk '{print \$2}' | xargs kill -9"
 alias rmexe="find . -maxdepth 1 -type f ! -name '*.*'  -exec rm -f {} +"
 alias cfg='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias rr='ranger'
@@ -129,7 +129,8 @@ export PATH="/usr/local/lib/ruby/gems/3.3.0/bin:$PATH"
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # The plugin will auto execute this zvm_after_init function
 function zvm_after_init() {
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  source <(fzf --zsh)
 }
 if type rg &> /dev/null; then
   export FZF_DEFAULT_COMMAND='rg --files'
@@ -139,6 +140,48 @@ fi
 function pydown() {
 	ls "$1" |gxargs -d'\n' -I {} ./run2.sh {} "${@:2}"
 }
+
+function pydown2() {
+  time python pydown_async2.py "$3" -o "$1" -task 10 -nocheck -time 100000 -size $2 -show 1
+}
+
+function aocdown() {
+  curl https://adventofcode.com/$1/day/$2/input \
+    --cookie "session=53616c7465645f5fdb1bcb2526fe39a7bd1be6615130ed1514e5d73500ee12a00bcc2708d4ff2d1ab759963a8444fd65ac302f8de9228693f51678c954df9368" \
+    -o ~/temp/in.txt
+}
+
+function ud() {
+  brew upgrade --greedy
+  nvim --headless "+Lazy! sync" +qa
+  omz update
+}
+
+function p() {
+  cd ~/Documents/code/github/my-work/proj/python/poly/
+  if [[ "$1" == 3 ]]; then
+    cat $(ls output_btc_5m_1d3_test_*.log | sort -r | head -n 1) | grep 'price' | python calc_profit.py
+  elif [[ "$1" == 4 ]]; then
+    cat $(ls output_btc_5m_1d4_test_*.log | sort -r | head -n 1) | grep 'price' | python calc_profit.py
+  elif [[ "$1" == 5 ]]; then
+    cat $(ls output_btc_5m_real_1d5_test_*.log | sort -r | head -n 1) | grep 'price' | python calc_profit.py
+  elif [[ "$1" == 2 ]]; then
+    cat $(ls output_btc_5m_0d7_test_*.log | sort -r | head -n 1) | grep 'price' | python calc_profit.py
+  else
+    cat $(ls output_btc_5m_1d5_test_*.log | sort -r | head -n 1) | grep 'price' | python calc_profit.py
+  fi
+}
+
+function buy() {
+  cd ~/Documents/code/github/my-work/proj/python/poly/
+  python poly_buy.py -t $1 -p $2 -d $3
+}
+
+function sell() {
+  cd ~/Documents/code/github/my-work/proj/python/poly/
+  python poly_sell.py -p $1
+}
+
 
 function small() {
   ls "$1"  |gxargs -d'\n' -I {} ffmpeg -i {} -vn -ab 64k -f mp3 {}.mp3
@@ -173,4 +216,17 @@ eval "$(zoxide init zsh)"
 export PUB_HOSTED_URL="https://pub.flutter-io.cn"
 export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
 export PATH="$HOME/Documents/flutter/bin:$PATH"
-export CPLUS_INCLUDE_PATH="$HOME/Downloads/ac-library/:/opt/homebrew/Cellar/gcc/14.2.0/bin/../lib/gcc/current/gcc/aarch64-apple-darwin23/14/../../../../../../include/c++/14/aarch64-apple-darwin23"
+export CPLUS_INCLUDE_PATH="$HOME/Downloads/ac-library/:/opt/homebrew/Cellar/gcc/14.2.0_1/bin/../lib/gcc/current/gcc/aarch64-apple-darwin24/14/../../../../../../include/c++/14/aarch64-apple-darwin24"
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+source <(fzf --zsh)
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/qixiao/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+#
+# 启用扩展历史记录，记录时间戳和耗时
+setopt EXTENDED_HISTORY
+# 如果需要更友好的显示格式
+export HISTTIMEFORMAT='%F %T '
+

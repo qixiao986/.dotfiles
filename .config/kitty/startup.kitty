@@ -1,0 +1,60 @@
+new_tab
+cd /Users/qixiao/Documents/code/github/my-work/proj/python/pydown
+launch --env KITTY_WINDOW_ID=1 zsh
+focus
+
+new_tab
+cd /Users/qixiao/Documents/code/github/my-work/proj/python/pydown
+launch --env KITTY_WINDOW_ID=2 zsh
+focus
+
+new_tab
+cd /Users/qixiao/Desktop/m3u8/
+launch --env KITTY_WINDOW_ID=3 zsh
+focus
+
+new_tab
+cd /Volumes/usb/doc/
+launch zsh
+focus
+
+new_tab
+cd /Users/qixiao/Documents/code/github/my-work/proj/python/pydown
+launch zsh
+focus
+
+new_tab
+cd /Volumes/usb/doc/mp3/
+launch zsh
+focus
+
+new_tab
+cd /Users/qixiao/Documents/code/github/algo/temp/
+launch zsh
+focus
+
+new_tab
+cd /Users/qixiao/
+launch zsh
+focus
+
+new_tab
+cd /Users/qixiao/
+launch zsh
+focus
+
+new_tab
+cd /Users/qixiao/
+launch zsh
+focus
+
+new_tab
+cd /Users/qixiao/
+launch zsh
+focus
+
+new_tab
+cd /Users/qixiao/
+launch zsh
+focus
+

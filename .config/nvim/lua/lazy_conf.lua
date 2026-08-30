@@ -14,16 +14,16 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- Navigation plugins
   'nvim-tree/nvim-web-devicons',
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-    }
-  },
-  'ggandor/leap.nvim',
+  -- {
+  --   "nvim-neo-tree/neo-tree.nvim",
+  --   branch = "v3.x",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+  --     "MunifTanjim/nui.nvim",
+  --   }
+  -- },
+  {url = "https://codeberg.org/andyg/leap.nvim",},
   'nacro90/numb.nvim',
   'kevinhwang91/rnvimr',
   {
@@ -35,6 +35,7 @@ require('lazy').setup({
   -- UI Plugins
   { 'rebelot/heirline.nvim' },
   'SmiteshP/nvim-navic',
+  'j-morano/buffer_manager.nvim',
   'altercation/vim-colors-solarized',
   -- 'willothy/nvim-cokeline',
   'akinsho/toggleterm.nvim',
@@ -68,6 +69,7 @@ require('lazy').setup({
   'editorconfig/editorconfig-vim',
   'windwp/nvim-autopairs',
   'kylechui/nvim-surround',
+  "gbprod/cutlass.nvim",
   'lewis6991/gitsigns.nvim',
   {
       'glacambre/firenvim',
@@ -95,15 +97,15 @@ require('lazy').setup({
   'kosayoda/nvim-lightbulb',
   'weilbith/nvim-code-action-menu',
   'nvim-lua/lsp-status.nvim',
-  {'glepnir/lspsaga.nvim', branch = 'main'},
+  {'nvimdev/lspsaga.nvim', branch = 'main'},
   'simrat39/symbols-outline.nvim',
   'folke/trouble.nvim',
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
   'nvim-treesitter/playground',
   { 'nvim-treesitter/nvim-treesitter-textobjects' },
-  { 'nvim-treesitter/nvim-treesitter-refactor' },
+  -- { 'nvim-treesitter/nvim-treesitter-refactor', },
   { 'nvim-treesitter/nvim-treesitter-context' },
-  'p00f/nvim-ts-rainbow',
+  'hiphish/rainbow-delimiters.nvim',
   { 'nvimtools/none-ls.nvim' },
   'mfussenegger/nvim-jdtls',
   'JoosepAlviste/nvim-ts-context-commentstring',
@@ -136,8 +138,7 @@ require('lazy').setup({
   'connorholyday/vim-snazzy',
   'folke/which-key.nvim',
   {
-    'anuvyklack/hydra.nvim',
-    dependencies = {'anuvyklack/keymap-layer.nvim'} -- needed only for pink hydras
+    'nvimtools/hydra.nvim',
   },
 
   -- language specific

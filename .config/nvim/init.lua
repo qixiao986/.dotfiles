@@ -9,7 +9,6 @@ treesitter.setup {
   ensure_installed = {'c', 'cpp','regex','markdown_inline', 'java', 'python', 'markdown', 'bash', 'lua', 'javascript', 'html', 'css', 'vim'},
   highlight = { enable = true },
   indent = { enable = true },
-  rainbow = { enable = true, extended_mode = true, },
   incremental_selection = { enable = true },
   textobjects = {
     select = {
@@ -51,23 +50,9 @@ treesitter.setup {
       },
     },
   },
-  refactor = {
-    highlight_definitions = { enable = true },
-    highlight_current_scope = { enable = true },
-    navigation = {
-      enable = true,
-      keymaps = {
-        goto_definition = "gnd",
-        list_definitions = "gnD",
-        list_definitions_toc = "gO",
-        goto_next_usage = "°", --<alt-*>
-        goto_previous_usage = "‹", --<alt-#>
-      },
-    },
-  },
 }
 
-require('nvim-treesitter.configs').setup {}
+-- require('nvim-treesitter.configs').setup {}
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldlevel = 1
@@ -82,7 +67,7 @@ require("mason-lspconfig").setup {
 }
 
 -- LSP
-local nvim_lsp = require('lspconfig')
+-- local nvim_lsp = require('lspconfig')
 
 -- lspsaga
 require 'lspsaga'.setup {}
@@ -337,15 +322,16 @@ capabilities.textDocument.foldingRange = {
 }
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "clangd", "pyright", "gopls", "lua_ls" }
+local servers = { "clangd", "pyright", "gopls", "lua_ls", "ts_ls" }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  vim.lsp.config(lsp, {
     on_attach = lsp_on_attach,
     flags = {
       debounce_text_changes = 150,
     },
     capabilities = capabilities
-  }
+  })
+  vim.lsp.enable(lsp)
 end
 
 local lspkind = require('lspkind')
@@ -497,7 +483,7 @@ local gccomplie = Terminal:new({
 })
 function _gccomplie_toggle()
   vim.cmd[[w]]
-  vim.cmd[[3TermExec cmd="g++-13 -std=c++17 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion  -DLOCAL %:r.cpp -o %:r"]]
+  vim.cmd[[3TermExec cmd="g++-15 -std=c++23 -O2 -Wall -Wextra -pedantic -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wcast-qual -Wcast-align -Wno-unused-result -Wno-sign-conversion  -DLOCAL %:r.cpp -o %:r"]]
 end
 
 function _gccrun_toggle()
@@ -541,6 +527,35 @@ vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], 
 vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
 vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
 
+require('hlslens').setup({
+    override_lens = function(render, posList, nearest, idx, relIdx)
+        local sfw = vim.v.searchforward == 1
+        local indicator, text, chunks
+        local absRelIdx = math.abs(relIdx)
+        if absRelIdx > 1 then
+            indicator = ('%d%s'):format(absRelIdx, sfw ~= (relIdx > 1) and '▲' or '▼')
+        elseif absRelIdx == 1 then
+            indicator = sfw ~= (relIdx == 1) and '▲' or '▼'
+        else
+            indicator = ''
+        end
+
+        local lnum, col = unpack(posList[idx])
+        if nearest then
+            local cnt = #posList
+            if indicator ~= '' then
+                text = ('[%s %d/%d]'):format(indicator, idx, cnt)
+            else
+                text = ('[%d/%d]'):format(idx, cnt)
+            end
+            chunks = {{' '}, {text, 'HlSearchLensNear'}}
+        else
+            text = ('[%s %d]'):format(indicator, idx)
+            chunks = {{' '}, {text, 'HlSearchLens'}}
+        end
+        render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
+    end
+})
 -- nvim-scrollbar
 require("scrollbar").setup{
 	show=true,
@@ -569,8 +584,9 @@ vim.api.nvim_create_autocmd({"BufEnter"}, { command = "ColorizerAttachToBuffer" 
 require('competitest').setup {
   received_problems_path = "$(HOME)/Documents/code/github/algo/contests/$(JUDGE)/$(CONTEST)/$(PROBLEM).$(FEXT)",
   received_contests_directory = "$(HOME)/Documents/code/github/algo/contests/$(JUDGE)/$(CONTEST)",
+  testcases_use_single_file = true,
   compile_command = {
-    cpp = { exec = "g++-14", args = { "-std=c++20", "-O2","-Wall","-Wextra","-pedantic","-Wshadow","-Wformat=2","-Wfloat-equal","-Wconversion","-Wlogical-op","-Wshift-overflow=2","-Wduplicated-cond","-Wcast-qual","-Wcast-align","-Wno-unused-result","-Wno-sign-conversion","-DLOCAL", "$(FNAME)", "-o", "a.out" } },
+    cpp = { exec = "g++-15", args = { "-std=c++23", "-O2","-Wall","-Wextra","-pedantic","-Wshadow","-Wformat=2","-Wfloat-equal","-Wconversion","-Wlogical-op","-Wshift-overflow=2","-Wduplicated-cond","-Wcast-qual","-Wcast-align","-Wno-unused-result","-Wno-sign-conversion","-DLOCAL", "$(FNAME)", "-o", "a.out" } },
   },
   run_command = {
     cpp       = { exec = './a.out' },
@@ -584,6 +600,9 @@ require('competitest').setup {
 }
 vim.keymap.set("n", "<leader>cr", "<cmd>CompetiTest receive contest<CR>")
 vim.keymap.set("n", "<leader>ct", "<cmd>CompetiTest run<CR>")
+vim.keymap.set("n", "<leader>ca", "<cmd>CompetiTest add_testcase<CR>")
+vim.keymap.set("n", "<leader>ce", "<cmd>CompetiTest edit_testcase<CR>")
+vim.keymap.set("n", "<leader>cs", "<cmd>CompetiTest show_ui<CR>")
 
 -- alpha dashboard
 require('alpha_conf')
@@ -663,9 +682,6 @@ vim.keymap.set("n", "<leader>z", require('zen-mode').toggle)
 -- twilight
 require('twilight').setup{}
 
--- leap
-require('leap').set_default_keymaps()
-
 -- possession
 require('possession').setup{
   commands = {
@@ -729,6 +745,9 @@ require('heirline_conf')
 
 -- noice
 require("noice").setup({
+  messages = {
+    view_search = false,
+  },
   views = {
     split = {
       size = "40%",
@@ -775,6 +794,10 @@ vim.keymap.set("n", "<leader>fn", "<cmd>Noice telescope<cr>")
 require("oil").setup {
   view_options = {
     show_hidden = true,
+    sort = {
+      { "type", "asc" },
+      { "name", "asc" },
+    },
   },
   columns = {
     "icon",
@@ -846,10 +869,32 @@ if vim.g.started_by_firenvim == true then
   vim.g.firenvim_config = {
     localSettings = {
       ['.*'] = {
-        filename = '/tmp/{hostname}_{pathname%10}_{selector%32}.{extension}',
+        filename = '/tmp/{hostname}_{pathname%10}_{selector%32}.cpp',
         takeover = 'never',
         priority = 1,
       }
     }
   }
 end
+
+-- rainbow
+require('rainbow-delimiters.setup').setup {}
+
+-- buffer manager
+require("buffer_manager").setup({
+  width=150,
+  height=30,
+})
+vim.keymap.set("n", "<leader>b", require("buffer_manager.ui").toggle_quick_menu)
+
+-- leap
+vim.keymap.set({'n', 'x', 'o'}, 's', '<Plug>(leap)')
+vim.keymap.set('n',             'S', '<Plug>(leap-from-window)')
+
+-- cutlass
+require('cutlass').setup{
+  cut_key='x',
+  exclude={'ns', 'nS'}
+}
+
+

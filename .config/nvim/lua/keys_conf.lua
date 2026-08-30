@@ -1,5 +1,5 @@
 require('utils_conf')
-require('hydra_conf')
+-- require('hydra_conf')
 
 vim.g.mapleader = t'<Space>'
 vim.g.maplocalleader = t'<Space>'
@@ -10,12 +10,12 @@ vim.keymap.set('i', '<C-h>', '<left>')
 vim.keymap.set('i', '<C-j>', '<down>')
 vim.keymap.set('i', '<C-k>', '<up>')
 
-vim.keymap.set('n', 'd', '"_d')
+-- vim.keymap.set('n', 'd', '"_d')
 vim.keymap.set('n', 'yA', '<cmd>%y<CR>')
 vim.keymap.set('n', 'dA', 'gg"_dG')
 vim.keymap.set('n', 'Y', 'y$')
 vim.keymap.set('n', 'J', 'mzJ`z')
-vim.keymap.set('x', '<leader>d', '"_d')
+-- vim.keymap.set('x', '<leader>d', '"_d')
 vim.keymap.set('n', 'Zz', '<cmd>q<CR>')
 vim.keymap.set('n', 'Zx', '<cmd>wq<CR>')
 vim.keymap.set('n', '<C-c>', ClearNoiceAndHL)
@@ -31,7 +31,9 @@ vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
 vim.keymap.set('n', 'cp', '<cmd>let @+ = expand("%:p")<CR>')
 --" Opens a new tab with the current buffer's path
 --" Super useful when editing files in the same directory
-vim.keymap.set('n', '<leader>e', ':e <C-r>=expand("%:p:h")<CR>/')
+vim.keymap.set('n', '<leader>e', function () return ':e ' ..  vim.fn.fnameescape(vim.fn.expand('%:p:h')) .. '/' end, { expr = true })
+
+
 
 -- Move a line of text using ALT+[jk] or Command+[jk] on mac
 vim.keymap.set('n', '∆', 'mz:m+<cr>`z')

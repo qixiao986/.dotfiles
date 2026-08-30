@@ -206,14 +206,14 @@ end
 
 ----------------------------------------------------------------------------------------------------
 -- Register Hammerspoon API manual: Open Hammerspoon manual in default browser
-hsman_keys = hsman_keys or {"alt", "H"}
-if string.len(hsman_keys[2]) > 0 then
-    spoon.ModalMgr.supervisor:bind(hsman_keys[1], hsman_keys[2], "Read Hammerspoon Manual", function()
-        hs.doc.hsdocs.forceExternalBrowser(true)
-        hs.doc.hsdocs.moduleEntitiesInSidebar(true)
-        hs.doc.hsdocs.help()
-    end)
-end
+-- hsman_keys = hsman_keys or {"alt", "H"}
+-- if string.len(hsman_keys[2]) > 0 then
+--     spoon.ModalMgr.supervisor:bind(hsman_keys[1], hsman_keys[2], "Read Hammerspoon Manual", function()
+--         hs.doc.hsdocs.forceExternalBrowser(true)
+--         hs.doc.hsdocs.moduleEntitiesInSidebar(true)
+--         hs.doc.hsdocs.help()
+--     end)
+-- end
 
 ----------------------------------------------------------------------------------------------------
 -- countdownM modal environment
@@ -375,61 +375,251 @@ spoon.ModalMgr.supervisor:enter()
 
 local spaces = require("hs.spaces") -- https://github.com/asmagill/hs._asm.spaces
 
--- Switch kitty
-hs.hotkey.bind({'command'}, 'space', function ()  -- hotkey config
-  local BUNDLE_ID = 'net.kovidgoyal.kitty' -- more accurate to avoid mismatching on browser titles
+-- -- Switch kitty
+-- hs.hotkey.bind({'command'}, 'space', function ()  -- hotkey config
+--   local BUNDLE_ID = 'net.kovidgoyal.kitty' -- more accurate to avoid mismatching on browser titles
+--
+--   function getMainWindow(app)
+--     -- get main window from app
+--     local win = nil
+--     while win == nil do
+--       win = app:mainWindow()
+--     end
+--     return win
+--   end
+--
+--   function moveWindow(kitty, space, mainScreen)
+--     -- move to main space
+--     local win = getMainWindow(kitty)
+--     if win:isFullScreen() then
+--       hs.eventtap.keyStroke('fn', 'f', 0, kitty)
+--     end
+--     winFrame = win:frame()
+--     scrFrame = mainScreen:fullFrame()
+--     winFrame.w = scrFrame.w/6*5
+--     winFrame.y = scrFrame.y
+--     winFrame.x = scrFrame.x + scrFrame.w/6
+--     win:setFrame(winFrame, 0)
+--     spaces.moveWindowToSpace(win, space)
+--     if win:isFullScreen() then
+--       hs.eventtap.keyStroke('fn', 'f', 0, kitty)
+--     end
+--     win:focus()
+--   end
+--
+--   local kitty = hs.application.get(BUNDLE_ID)
+--   if kitty ~= nil and kitty:isFrontmost() then
+--     kitty:hide()
+--   else
+--     local space = spaces.activeSpaceOnScreen()
+--     local mainScreen = hs.screen.mainScreen()
+--     if kitty == nil and hs.application.launchOrFocusByBundleID(BUNDLE_ID) then
+--       local appWatcher = nil
+--       appWatcher = hs.application.watcher.new(function(name, event, app)
+--         if event == hs.application.watcher.launched and app:bundleID() == BUNDLE_ID then
+--           getMainWindow(app):move(hs.geometry({x=0,y=0,w=1,h=1}))
+--           app:hide()
+--           moveWindow(app, space, mainScreen)
+--           appWatcher:stop()
+--         end
+--       end)
+--       appWatcher:start()
+--     end
+--     if kitty ~= nil then
+--       moveWindow(kitty, space, mainScreen)
+--     end
+--   end
+--
+--   -- 展开交易铁律sticky
+--   local stickies = hs.application.get("com.apple.Stickies")
+--     
+--   -- 1. 如果便笺还没启动，先启动它
+--   if not stickies then
+--       hs.application.launchOrFocusByBundleID("com.apple.Stickies")
+--       return
+--   end
+--
+--   -- 2. 将其拉到前台 (确保菜单命令作用于正确的窗口)
+--   if not stickies:isFrontmost() then
+--       stickies:activate()
+--   end
+--
+--   -- 3. 直接调用原生菜单命令，抛弃模拟按键
+--   -- 定义不同语言和状态下的菜单路径 (中/英)
+--   local menu_paths = {
+--       {"窗口", "折叠"},
+--       {"窗口", "展开"},
+--       {"Window", "Collapse"},
+--       {"Window", "Expand"}
+--   }
+--   
+--   -- 遍历菜单，找到当前可用的那个并直接触发
+--   for _, path in ipairs(menu_paths) do
+--       if stickies:findMenuItem(path) then
+--           stickies:selectMenuItem(path)
+--           break
+--       end
+--   end
+-- end)
 
-  function getMainWindow(app)
-    -- get main window from app
-    local win = nil
-    while win == nil do
-      win = app:mainWindow()
-    end
-    return win
+-- ==========================================
+-- 配置区 (Configuration)
+-- ==========================================
+local ENABLE_STICKIES = false -- 【总开关】: 改为 false 即可彻底关闭便笺联动功能，只保留 Kitty
+
+local KITTY_BUNDLE_ID = 'net.kovidgoyal.kitty' 
+local STICKIES_BUNDLE_ID = "com.apple.Stickies"
+
+-- ==========================================
+-- 通用工具模块 (Utilities)
+-- ==========================================
+local function getMainWindow(app)
+  local win = app:mainWindow()
+  if not win then
+    local windows = app:allWindows()
+    if #windows > 0 then win = windows[1] end
   end
+  return win
+end
 
-  function moveWindow(kitty, space, mainScreen)
-    -- move to main space
-    local win = getMainWindow(kitty)
-    if win:isFullScreen() then
-      hs.eventtap.keyStroke('fn', 'f', 0, kitty)
+local function yieldFocus()
+  local windows = hs.window.orderedWindows()
+  for _, win in ipairs(windows) do
+    local app = win:application()
+    if app then
+      local bid = app:bundleID()
+      -- 如果关闭了便笺功能，就不需要判断便笺的 Bundle ID
+      local isStickies = ENABLE_STICKIES and (bid == STICKIES_BUNDLE_ID) or false
+      if bid ~= KITTY_BUNDLE_ID and not isStickies and win:isStandard() then
+        app:activate()
+        return
+      end
     end
-    winFrame = win:frame()
-    scrFrame = mainScreen:fullFrame()
-    winFrame.w = scrFrame.w
-    winFrame.y = scrFrame.y
-    winFrame.x = scrFrame.x
-    win:setFrame(winFrame, 0)
-    spaces.moveWindowToSpace(win, space)
-    if win:isFullScreen() then
-      hs.eventtap.keyStroke('fn', 'f', 0, kitty)
-    end
-    win:focus()
   end
+  local finder = hs.application.get("com.apple.finder")
+  if finder then finder:activate() end
+end
 
-  local kitty = hs.application.get(BUNDLE_ID)
-  if kitty ~= nil and kitty:isFrontmost() then
-    kitty:hide()
-  else
-    local space = spaces.activeSpaceOnScreen()
-    local mainScreen = hs.screen.mainScreen()
-    if kitty == nil and hs.application.launchOrFocusByBundleID(BUNDLE_ID) then
+-- ==========================================
+-- Kitty 控制模块 (Kitty Controller)
+-- ==========================================
+local function moveAndFocusKitty(kittyApp)
+  local space = spaces and spaces.activeSpaceOnScreen() or nil
+  local mainScreen = hs.screen.mainScreen()
+  
+  local win = getMainWindow(kittyApp)
+  if not win then return end
+
+  if win:isFullScreen() then
+    hs.eventtap.keyStroke('fn', 'f', 0, kittyApp)
+  end
+  
+  local winFrame = win:frame()
+  local scrFrame = mainScreen:fullFrame()
+  winFrame.w = scrFrame.w / 6 * 5
+  winFrame.y = scrFrame.y
+  winFrame.x = scrFrame.x + scrFrame.w / 6
+  win:setFrame(winFrame, 0)
+  
+  if spaces and spaces.moveWindowToSpace then
+      spaces.moveWindowToSpace(win, space)
+  end
+  
+  if win:isFullScreen() then
+    hs.eventtap.keyStroke('fn', 'f', 0, kittyApp)
+  end
+  win:focus()
+end
+
+local function launchOrShowKitty()
+  local kittyApp = hs.application.get(KITTY_BUNDLE_ID)
+  if kittyApp == nil then
+    if hs.application.launchOrFocusByBundleID(KITTY_BUNDLE_ID) then
       local appWatcher = nil
       appWatcher = hs.application.watcher.new(function(name, event, app)
-        if event == hs.application.watcher.launched and app:bundleID() == BUNDLE_ID then
-          getMainWindow(app):move(hs.geometry({x=0,y=0,w=1,h=1}))
+        if event == hs.application.watcher.launched and app:bundleID() == KITTY_BUNDLE_ID then
+          local win = getMainWindow(app)
+          if win then win:move(hs.geometry({x=0, y=0, w=1, h=1})) end
           app:hide()
-          moveWindow(app, space, mainScreen)
+          moveAndFocusKitty(app)
           appWatcher:stop()
         end
       end)
       appWatcher:start()
     end
-    if kitty ~= nil then
-      moveWindow(kitty, space, mainScreen)
+  else
+    moveAndFocusKitty(kittyApp)
+  end
+end
+
+-- ==========================================
+-- 便笺 控制模块 (Stickies Controller)
+-- ==========================================
+local function isStickiesCollapsed(app)
+  if not app then return false end
+  local win = getMainWindow(app)
+  if win then return win:frame().h < 50 end
+  return false
+end
+
+-- ==========================================
+-- 主逻辑：快捷键绑定 (Main Hotkey Bind)
+-- ==========================================
+hs.hotkey.bind({'command'}, 'space', function () 
+  local kitty = hs.application.get(KITTY_BUNDLE_ID)
+  local stickies = ENABLE_STICKIES and hs.application.get(STICKIES_BUNDLE_ID) or nil
+
+  local isKittyFront = (kitty ~= nil and kitty:isFrontmost())
+  local isStickiesFront = (stickies ~= nil and stickies:isFrontmost())
+  
+  -- 统一动作判定
+  local action = (isKittyFront or isStickiesFront) and "HIDE" or "SHOW"
+
+  if action == "HIDE" then
+    -- 1. 隐藏 Kitty
+    if kitty then kitty:hide() end
+    
+    -- 2. 处理便笺与焦点交接
+    if ENABLE_STICKIES and stickies and not isStickiesCollapsed(stickies) then
+        stickies:activate()
+        hs.timer.doAfter(0.1, function()
+            if not stickies:selectMenuItem({"窗口", "折叠"}) and not stickies:selectMenuItem({"Window", "Collapse"}) then
+                hs.eventtap.keyStroke({"cmd"}, "m")
+            end
+            hs.timer.doAfter(0.1, yieldFocus)
+        end)
+    else
+        yieldFocus()
+    end
+
+  else -- action == "SHOW"
+    if ENABLE_STICKIES then
+        -- 开启便笺联动模式：先处理便笺，再唤醒 Kitty
+        if not stickies then
+            hs.application.launchOrFocusByBundleID(STICKIES_BUNDLE_ID)
+            hs.timer.doAfter(0.3, launchOrShowKitty)
+        elseif isStickiesCollapsed(stickies) then
+            stickies:activate()
+            hs.timer.doAfter(0.1, function()
+                if not stickies:selectMenuItem({"窗口", "展开"}) and not stickies:selectMenuItem({"Window", "Expand"}) then
+                    hs.eventtap.keyStroke({"cmd"}, "m")
+                end
+                hs.timer.doAfter(0.1, launchOrShowKitty)
+            end)
+        else
+            launchOrShowKitty()
+        end
+    else
+        -- 纯 Kitty 模式：直接唤醒
+        launchOrShowKitty()
     end
   end
 end)
+
+
+
+
+
 
 local VimMode = hs.loadSpoon('VimMode')
 local vim = VimMode:new()
@@ -440,6 +630,6 @@ vim
   :disableForApp('MacVim')
   :disableForApp('zoom.us')
   :disableForApp('kitty')
-  :enterWithSequence('\\\\')
+  :enterWithSequence(';;')
 
 

@@ -212,7 +212,7 @@ FileNameBlock = utils.insert(
 
 local FileType = {
   provider = function()
-    return string.upper(vim.bo.filetype)
+    return string.upper(vim.bo.filetype) ..' '.. tostring(vim.fn.wordcount().chars) .. 'C'
   end,
   hl = { fg = utils.get_highlight("Type").fg, bold = true },
   on_click = {
@@ -225,6 +225,37 @@ local FileType = {
       end, 100)
     end,
   },
+}
+
+-- competitive programing receive
+local CP = {
+  provider = function()
+    return '';
+  end,
+	hl = function(self)
+		return { fg = colors.purple }
+	end,
+  on_click = {
+    name = "cp_receive",
+    callback = function()
+      vim.cmd[[CompetiTest receive contest]]
+    end,
+  }
+}
+
+local CPRun = {
+  provider = function()
+    return '';
+  end,
+	hl = function(self)
+		return { fg = colors.blue }
+	end,
+  on_click = {
+    name = "cp_run",
+    callback = function()
+      vim.cmd[[CompetiTest run]]
+    end,
+  }
 }
 
 local FileEncoding = {
@@ -305,7 +336,7 @@ local LSPActive = {
 	-- Or complicate things a bit and get the servers names
 	provider = function()
 		local names = {}
-		for i, server in pairs(vim.lsp.buf_get_clients(0)) do
+		for i, server in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
 			table.insert(names, server.name)
 		end
 		return " [" .. table.concat(names, " ") .. "]"
@@ -661,6 +692,12 @@ local DefaultStatusline = {
   Space,
   LSPActive,
   Space,
+  CP,
+  Space,
+  Space,
+  CPRun,
+  Space,
+  Space,
   FileType,
   Space,
   FileEncoding,
@@ -907,20 +944,20 @@ local BufferLine = utils.make_buflist(
 
 vim.cmd('hi TabLineFill guibg=' .. utils.get_highlight("TabLineSel").bg)
 
-vim.keymap.set("n", "<leader>b", function()
-	local tabline = require("heirline").tabline
-	local buflist = tabline._buflist[1]
-	buflist._picker_labels = {}
-	buflist._show_picker = true
-	vim.cmd.redrawtabline()
-	local char = vim.fn.getcharstr()
-	local bufnr = buflist._picker_labels[char]
-	if bufnr then
-		vim.api.nvim_win_set_buf(0, bufnr)
-	end
-	buflist._show_picker = false
-	vim.cmd.redrawtabline()
-end)
+-- vim.keymap.set("n", "<leader>b", function()
+-- 	local tabline = require("heirline").tabline
+-- 	local buflist = tabline._buflist[1]
+-- 	buflist._picker_labels = {}
+-- 	buflist._show_picker = true
+-- 	vim.cmd.redrawtabline()
+-- 	local char = vim.fn.getcharstr()
+-- 	local bufnr = buflist._picker_labels[char]
+-- 	if bufnr then
+-- 		vim.api.nvim_win_set_buf(0, bufnr)
+-- 	end
+-- 	buflist._show_picker = false
+-- 	vim.cmd.redrawtabline()
+-- end)
 
 local Tabpage = {
 	provider = function(self)
